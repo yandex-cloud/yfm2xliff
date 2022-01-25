@@ -1,0 +1,12 @@
+{
+  "name": "yfm2xliff",
+  "version": "1.0.0",
+  "description": "Здесь лежит два скопированных репозитория: yfm-transform и md2xliff",
+  "main": "constants.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deps:install": "cd md2xliff-fork && npm i && cd ../yfm-transform-fork  && npm i && cd .."
+  },
+  "author": "",
+  "license": "ISC"
+}
