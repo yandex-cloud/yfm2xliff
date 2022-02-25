@@ -3,5 +3,7 @@
 .vscode
 
 node_modules
-*.skl.md
+
+# data
+mock/**/*.skl.md
 *.xlf

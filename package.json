@@ -4,9 +4,14 @@
   "description": "Здесь лежит два скопированных репозитория: yfm-transform и md2xliff",
   "main": "constants.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deps:install": "cd md2xliff-fork && npm i && cd ../yfm-transform-fork  && npm i && cd .."
+    "preinstall": "cd md2xliff-fork && npm i && cd ../yfm-transform-fork  && npm i && cd ..",
+    "postinstall": "node scripts/postinstall.mjs",
+    "test": "jest"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "ramda": "^0.28.0"
+  }
 }
