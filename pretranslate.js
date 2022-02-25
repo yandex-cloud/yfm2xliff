@@ -2,10 +2,10 @@ const {readFileSync, writeFileSync} = require('fs');
 
 const pretranslate = require('./md2xliff-fork/pretranslate.js');
 
-const pluginsMockData = require('./constants');
+const {mockData} = require('./constants');
 
 try {
-	pluginsMockData.forEach(({
+	mockData.forEach(({
 		xlfFileName,
 	}) => {
 		const {sourceLang, targetLang} = data;

@@ -2,10 +2,10 @@ const {readFileSync, writeFileSync} = require('fs');
 
 const reconstruct = require('./md2xliff-fork/xliff-reconstruct.js');
 
-const pluginsMockData = require('./constants');
+const {mockData} = require('./constants');
 
 try {
-	pluginsMockData.forEach(({
+	mockData.forEach(({
 		translatedFileName,
 		skeletonFileName,
 		xlfFileName,

@@ -1,21 +1,29 @@
 const {resolve, join} = require('path');
 
-const pluginsMockData = [
+const mocks = [
+  'comments',
+/*
 	'notes',
 	'cut',
 	'tabs',
 	'links',
 	'meta',
 	'yfmTable'
-].map((pluginName) => {
+*/
+];
+
+const mockData = mocks.map((pluginName) => {
 	const prefix = resolve(__dirname, './mock');
 
 	return {
-		markdownFileName: join(prefix, `${pluginName}/test.md`),
-		skeletonFileName: join(prefix, `${pluginName}/test.skl.md`),
-		xlfFileName: join(prefix, `${pluginName}/test.xlf`),
-		translatedFileName: join(prefix, `${pluginName}/test.en.md`),
+		markdownFileName: join(prefix, `${pluginName}/${pluginName}.md`),
+		skeletonFileName: join(prefix, `${pluginName}/${pluginName}.skl.md`),
+		xlfFileName: join(prefix, `${pluginName}/${pluginName}.xlf`),
+		translatedFileName: join(prefix, `${pluginName}/${pluginName}.en.md`),
 	};
 });
 
-module.exports = pluginsMockData;
+module.exports = {
+  mocks,
+  mockData,
+}
