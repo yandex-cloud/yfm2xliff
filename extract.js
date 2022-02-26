@@ -1,9 +1,9 @@
 const {promises: {readdir, readFile, writeFile}} = require('fs');
 const {join} = require('path');
-
-const {compose, not} = require('ramda');
+const {compose} = require('ramda');
 const composeP = require('@ramda/composep');
 
+const {visible} = require('./utils.js');
 const lexer = require('./yfm-transform-fork/lexer.js');
 const extractor = require('./md2xliff-fork/extract.js');
 
@@ -16,10 +16,6 @@ const main = async () => {
 
   await Promise.all(units.map(process));
 }
-
-const hidden = path => (/(^|\/)\.[^\/\.]/g).test(path);
-
-const visible = compose(not, hidden);
 
 const read = async (name) => {
   const md = join(inputPath, name, `${name}.md`);

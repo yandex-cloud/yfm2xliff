@@ -2,6 +2,7 @@ const {promises: { readdir, readFile, writeFile }, readdirSync, readFileSync} = 
 const {join} = require('path');
 const {compose} = require('ramda');
 
+const {visible} = require('utils.js');
 const lexer = require('yfm-transform-fork/lexer.js');
 const extract = require('md2xliff-fork/extract.js');
 
@@ -12,7 +13,7 @@ const expectedPath = join(cwd(), 'expected');
 
 const logger = data => { console.log(JSON.stringify(data, null, 4)); return data; };
 
-const units = readdirSync(expectedPath);
+const units = readdirSync(expectedPath).filter(visible);
 
 units.map(compose(xliff, skeleton, data));
 
