@@ -1,13 +1,65 @@
-var escape = require('escape-html'),
-    marked = require('marked'),
-    htmlParser = require('./html-parser'),
-    isHtml = require('is-html'),
-    xliffSerialize = require('./xliff-serialize'),
-    postcss = require('postcss'),
-    extractComments = require('esprima-extract-comments'),
-    hideErrors = process.env.HIDE_ERRORS;
+const escape = require('escape-html');
+const marked = require('marked');
+const htmlParser = require('./html-parser');
+const isHtml = require('is-html');
+const xliffSerialize = require('./xliff-serialize');
+const postcss = require('postcss');
+const extractComments = require('esprima-extract-comments');
+const hideErrors = process.env.HIDE_ERRORS;
 
 marked.InlineLexer = require('./InlineLexer');
+
+const flatter = token =>
+  token.children && token.children.length
+    ? flatter(token.children)
+    : token;
+
+const typefilter = ({ type }) => type === 'text' || type === 'fence';
+
+const CommentsIterator = (text) => {
+  const regexp = /(?:\[\/\/\]:)\s([\s\S].*)/g;
+  
+  return function*() {
+      for (;(this.comments = regexp.exec(text));) {
+
+        yield this.comments[1];
+      }
+    }
+};
+
+const textmap = (token) => {
+  const it = CommentsIterator(token.content);
+
+  if (it().next().value) {
+    token.type = 'comment';
+  }
+
+  return token;
+}
+
+const codemap = (token) => {
+  if (token.type === 'fence') {
+    token.type = 'code';
+    token.lang = token.info;
+  }
+
+  return token;
+}
+
+const typemap = (token) => {
+  switch(token.type) {
+    case 'text':
+      return textmap(token);
+    case 'fence':
+      return codemap(token);
+    default:
+      return token;
+  }
+}
+
+const content = ({ content }) => content?.length;
+
+const logger = (token) => console.log(token) || token;
 
 function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
     markdownStr = markdownStr
@@ -20,11 +72,17 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
 
     const lexer = options.lexer || marked.lexer; // ADDED: support custom lexer
 
-    var skeleton = markdownStr,
-        tokens = lexer(markdownStr, options),
-        units = [],
-        segmentCounter = 0,
-        position = 0;
+    let skeleton = markdownStr;
+    let links = {};
+    let units = [];
+    let segmentCounter = 0;
+    let position = 0;
+
+    const tokens = lexer(markdownStr, options)
+        .flatMap(flatter)
+        .filter(typefilter)
+        .filter(content)
+        .map(typemap);
 
     markdownFileName || (markdownFileName = 'source.md');
     skeletonFilename || (skeletonFilename = markdownFileName.split('.').shift() + '.skl.md');
@@ -49,8 +107,20 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         });
     }
 
+    const onComment = (text) => {
+      const it = CommentsIterator(text);
+
+      for (const value of it()) {
+        getSegments(value);
+      }
+    }
+
     function onCode(code, lang) {
-        var comments;
+        let comments;
+
+        if (lang === 'markdown') {
+          onComment(code);
+        }
 
         if (lang === 'css') {
             try {
@@ -137,8 +207,8 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     function onText(text) {
         if (text.match(/^[\s]+$/)) return; // should extract lists. If 2 and more spaces don't addUnit
 
-        var inlineTokens = marked.inlineLexer(text, tokens.links, options),
-            xml = inlineTokens.map(onInlineToken).filter(Boolean).join('');
+        const inlineTokens = marked.inlineLexer(text, links, options);
+        const xml = inlineTokens.map(onInlineToken).filter(Boolean).join('');
 
         xml && addUnit(text, xml);
     }
@@ -163,7 +233,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         }
 
         if (type === 'link' || type === 'reflink') {
-            var insideLinkTokens = marked.inlineLexer(token.text, tokens.links, options),
+            var insideLinkTokens = marked.inlineLexer(token.text, links, options),
                 serializedText = insideLinkTokens.map(onInlineToken).join('');
 
             // image
@@ -205,7 +275,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     }
 
     function getSegments(text) {
-        marked.inlineLexer(text, tokens.links, options).reduce(function(prev, curr, idx) {
+        marked.inlineLexer(text, links, options).reduce(function(prev, curr, idx) {
 
             // if (curr.type === 'escape') {
             //     prev.push(curr.text.replace(/\\/g, '\\\\')); // issue #16;
@@ -255,9 +325,10 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     }
 
     tokens.forEach(function(token) {
-        var type = token.type,
-            text = token.text;
+        const type = token.type;
+        const text = token.content;
 
+        if (type === 'comment') return onComment(text);
         if (type === 'table') return onTable(token);
         if (typeof text === 'undefined') return;
         if (type === 'code') return onCode(text, token.lang);
@@ -269,7 +340,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
 
     // handle reflinks like
     // [ym]: https://github.com/ymaps/modules
-    var reflinks = tokens.links;
+    var reflinks = links;
     Object.keys(reflinks).forEach(function(linkKey) {
         var link = reflinks[linkKey];
         getSegments(linkKey);

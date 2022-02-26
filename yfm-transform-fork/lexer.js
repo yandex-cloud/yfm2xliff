@@ -18,18 +18,6 @@ const video = require('./plugins/video');
 const monospace = require('./plugins/monospace');
 const yfmTable = require('./plugins/table');
 
-function filterTokens(params, type, handler) {
-	params.tokens.forEach(function forToken(token) {
-		if (token.children) {
-			filterTokens({tokens: token.children}, type, handler)
-		}
-
-		if (token.type === type) {
-			handler(token);
-		}
-	});
-}
-
 // ADDED: support lexer function
 function lexer(originInput, opts = {}) {
     const {
@@ -64,17 +52,7 @@ function lexer(originInput, opts = {}) {
         const env = {};
         const tokens = md.parse(input, env);
 
-		const preparedTokens = [];
-		preparedTokens.links = {};
-
-		filterTokens({tokens}, 'text', (token) => {
-			preparedTokens.push({
-				text: token.content,
-				type: 'text'
-			})
-		});
-
-        return preparedTokens;
+        return tokens;
     } catch (err) {
         log.error(`Error occurred${path ? ` in ${bold(path)}` : ''}`);
         throw err;

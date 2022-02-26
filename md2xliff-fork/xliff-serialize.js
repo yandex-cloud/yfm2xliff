@@ -37,5 +37,5 @@ module.exports = function(xliffData) {
         '    </body>',
         ' </file>',
         '</xliff>'
-    ]).join(EOL);
+    ]).join(EOL) + EOL;
 };
