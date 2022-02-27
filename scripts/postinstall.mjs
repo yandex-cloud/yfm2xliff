@@ -1,6 +1,7 @@
 import {promises} from 'fs';
 import {join} from 'path';
 import {render} from './template.js';
+import {visible} from '../utils.js';
 
 const {readdir, readFile, writeFile} = promises;
 
@@ -12,7 +13,7 @@ const CWD = process.cwd();
 
 const expectedpath = join(CWD, EXPECTED_DIRNAME);
 
-const expectedlist = await readdir(expectedpath);
+const expectedlist = (await readdir(expectedpath)).filter(visible);
 
 const templates = await Promise.all(
   expectedlist.map(name =>
