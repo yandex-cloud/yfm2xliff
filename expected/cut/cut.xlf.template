@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="{{root}}/mock/cut/cut.md"
+    source-language="ru-RU" target-language="en-US" datatype="markdown">
+    <header>
+      <skl>
+        <external-file href="{{root}}/mock/cut/cut.skl.md"/>
+      </skl>
+    </header>
+    <body>
+      <trans-unit id="1">
+        <source xml:lang="ru-RU">Заголовок ката</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source xml:lang="ru-RU">Контент, который отобразится по нажатию.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+    </body>
+ </file>
+</xliff>
