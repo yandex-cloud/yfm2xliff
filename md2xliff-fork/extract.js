@@ -17,7 +17,7 @@ const flatter = token =>
     : token;
 
 const ftype = ({ type }) =>
-  type === 'text' || type === 'fence';
+  type === 'text' || type === 'fence' || type === 'code_inline';
 
 const fnotalphanum = ({ content }) => Array.isArray(content)
   ? content.every(({body}) => notalphanum({content: body}))
@@ -47,10 +47,9 @@ const textmap = (token) => {
 }
 
 const codemap = (token) => {
-  if (token.type === 'fence') {
-    token.type = 'code';
-    token.lang = token.info;
-  }
+  // for the inline code tokens making assumption of the markdown language
+  token.lang = !token.info.length && token.type === 'code_inline' ? 'markdown' : token.info;
+  token.type = 'code';
 
   return token;
 }
@@ -60,6 +59,7 @@ const typemap = (token) => {
     case 'text':
       return textmap(token);
     case 'fence':
+    case 'code_inline':
       return codemap(token);
     default:
       return token;
