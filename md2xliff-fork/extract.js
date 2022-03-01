@@ -7,6 +7,8 @@ const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
 
+const {allPass} = require('ramda');
+
 marked.InlineLexer = require('./InlineLexer');
 
 const flatter = token =>
@@ -14,7 +16,14 @@ const flatter = token =>
     ? flatter(token.children)
     : token;
 
-const typefilter = ({ type }) => type === 'text' || type === 'fence';
+const ftype = ({ type }) =>
+  type === 'text' || type === 'fence';
+
+const fnotalphanum = ({ content }) => Array.isArray(content)
+  ? content.every(({body}) => notalphanum({content: body}))
+  : content.toUpperCase() !== content.toLowerCase();
+
+const filters = allPass([fnotalphanum, ftype]);
 
 const CommentsIterator = (text) => {
   const regexp = /(?:\[\/\/\]:)\s([\s\S].*)/g;
@@ -57,8 +66,6 @@ const typemap = (token) => {
   }
 }
 
-const content = ({ content }) => content?.length;
-
 const logger = (token) => console.log(token) || token;
 
 function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
@@ -80,8 +87,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
 
     const tokens = lexer(markdownStr, options)
         .flatMap(flatter)
-        .filter(typefilter)
-        .filter(content)
+        .filter(filters)
         .map(typemap);
 
     markdownFileName || (markdownFileName = 'source.md');
