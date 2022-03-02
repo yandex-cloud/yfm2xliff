@@ -6,6 +6,7 @@ const xliffSerialize = require('./xliff-serialize');
 const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
+const {compose, not} = require('ramda');
 
 const {allPass} = require('ramda');
 
@@ -16,14 +17,57 @@ const flatter = token =>
     ? flatter(token.children)
     : token;
 
+const merge = (a, token) => {
+  if (token.type === 'link_open') {
+    const link = { ...token, type: 'link', content: [] };
+
+    a.merged = [...a.merged, link];
+
+    a.context = 'link';
+  } else if (a.context === 'link') {
+    const idx = a.merged.length - 1;
+    const last = a.merged[idx];
+
+    if (token.content.length) {
+      a.merged[idx].content = [
+        ...last.content,
+        { body: token.content, type: token.type }
+      ];
+
+      if (!last.markup.length) {
+        a.merged[idx].markup = token.markup;
+      }
+    }
+
+    if (token.type === 'link_close') {
+      if (last.markup === '`') {
+        a.merged[idx].type = 'code_inline';
+
+        a.merged[idx].content = last.content.map(({body}) => body).join('');
+      }
+
+      a.context = '';
+    }
+  } else {
+    a.merged = [...a.merged, token];
+  }
+
+  return a;
+}
+
+const flink =({ type, markup, content }) =>
+  type !== 'link' || 
+  markup !== 'autolink' &&
+  content.every(({body}) => body !== '{#T}');
+
 const ftype = ({ type }) =>
-  type === 'text' || type === 'fence' || type === 'code_inline';
+  type === 'text' || type === 'fence' || type === 'code_inline' || type === 'link';
 
 const falpha = ({ content }) => Array.isArray(content)
   ? content.every(({body}) => falpha({content: body}))
   : content.toUpperCase() !== content.toLowerCase();
 
-const filters = allPass([falpha, ftype]);
+const filters = allPass([falpha, ftype, flink]);
 
 const CommentsIterator = (text) => {
   const regexp = /(?:\[\/\/\]:)\s([\s\S].*)/g;
@@ -32,8 +76,7 @@ const CommentsIterator = (text) => {
       for (;(this.comments = regexp.exec(text));) {
 
         yield this.comments[1];
-      }
-    }
+      } }
 };
 
 const textmap = (token) => {
@@ -87,6 +130,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
 
     const tokens = lexer(markdownStr, options)
         .flatMap(flatter)
+        .reduce(merge, { merged: [], context: '' }).merged
         .filter(filters)
         .map(typemap);
 
@@ -119,6 +163,14 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
       for (const value of it()) {
         getSegments(value);
       }
+    }
+
+    function onLink(token) {
+      const {content, attrs: [_, title]} = token;
+
+      content.map(({body}) => getSegments(body));
+
+      title && title[0] === "title" && getSegments(title[1]);
     }
 
     function onCode(code, lang) {
@@ -334,6 +386,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         const type = token.type;
         const text = token.content;
 
+        if (type === 'link') return onLink(token);
         if (type === 'comment') return onComment(text);
         if (type === 'table') return onTable(token);
         if (typeof text === 'undefined') return;
