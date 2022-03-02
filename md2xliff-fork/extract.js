@@ -19,11 +19,11 @@ const flatter = token =>
 const ftype = ({ type }) =>
   type === 'text' || type === 'fence' || type === 'code_inline';
 
-const fnotalphanum = ({ content }) => Array.isArray(content)
-  ? content.every(({body}) => notalphanum({content: body}))
+const falpha = ({ content }) => Array.isArray(content)
+  ? content.every(({body}) => falpha({content: body}))
   : content.toUpperCase() !== content.toLowerCase();
 
-const filters = allPass([fnotalphanum, ftype]);
+const filters = allPass([falpha, ftype]);
 
 const CommentsIterator = (text) => {
   const regexp = /(?:\[\/\/\]:)\s([\s\S].*)/g;
