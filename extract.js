@@ -10,7 +10,7 @@ const extractor = require('./md2xliff-fork/extract.js');
 const inputPath = join(process.cwd(), 'mock');
 
 const main = async () => {
-  const units = (await readdir(inputPath)).filter(visible);
+  const units = (await readdir(inputPath)).filter(visible).filter(a => a === 'base');
 
   const process = composeP(write, extract, read);
 

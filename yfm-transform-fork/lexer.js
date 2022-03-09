@@ -17,6 +17,7 @@ const tabs = require('./plugins/tabs');
 const video = require('./plugins/video');
 const monospace = require('./plugins/monospace');
 const yfmTable = require('./plugins/table');
+const escape = require('./plugins/escape');
 
 // ADDED: support lexer function
 function lexer(originInput, opts = {}) {
@@ -29,6 +30,7 @@ function lexer(originInput, opts = {}) {
         highlightLangs = {},
         ...customOptions
     } = opts;
+
     const pluginOptions = {
         ...customOptions,
         vars,
@@ -43,13 +45,22 @@ function lexer(originInput, opts = {}) {
         : liquid(originInput, vars, path, {conditionsInCode});
 
     const highlight = makeHighlight(highlightLangs);
-    const md = new MarkdownIt({html: allowHTML, linkify, highlight, breaks});
+
+    const md = new MarkdownIt({html: allowHTML, linkify, highlight, breaks}); 
     // Need for ids of headers
     md.use(attrs, {leftDelimiter, rightDelimiter});
+
     plugins.forEach((plugin) => md.use(plugin, pluginOptions));
+
+    // override parser's escape rule
+    // preserves escape character: \
+    const escapeRule = md.inline.ruler.__rules__.find(({name}) => name === 'escape');
+
+    escapeRule.fn = escape;
 
     try {
         const env = {};
+
         const tokens = md.parse(input, env);
 
         return tokens;

@@ -1,5 +1,4 @@
 const escape = require('escape-html');
-const marked = require('marked');
 const htmlParser = require('./html-parser');
 const isHtml = require('is-html');
 const xliffSerialize = require('./xliff-serialize');
@@ -9,8 +8,6 @@ const hideErrors = process.env.HIDE_ERRORS;
 const {compose, not} = require('ramda');
 
 const {allPass} = require('ramda');
-
-marked.InlineLexer = require('./InlineLexer');
 
 const flatter = token =>
   token.children && token.children.length
@@ -120,7 +117,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         .replace(/\u00a0/g, ' ')
         .replace(/\u2424/g, '\n');
 
-    const lexer = options.lexer || marked.lexer; // ADDED: support custom lexer
+    const lexer = options.lexer;
 
     let skeleton = markdownStr;
     let links = {};
@@ -139,7 +136,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     srcLang || (srcLang = 'ru-RU');
     trgLang || (trgLang = 'en-US');
 
-    function addUnit(text, xml) {
+    function addUnit(text) { 
         segmentCounter++;
         skeleton = skeleton.slice(0, position) + skeleton.slice(position).replace(text, function(str, offset) {
             position += offset + ('%%%' + segmentCounter + '%%%').length;
@@ -149,7 +146,7 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
             id: segmentCounter,
             source: {
                 lang: srcLang,
-                content: xml || escape(text)
+                content: escape(text)
             },
             target: {
                 lang: trgLang
@@ -265,121 +262,14 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     function onText(text) {
         if (text.match(/^[\s]+$/)) return; // should extract lists. If 2 and more spaces don't addUnit
 
-        const inlineTokens = marked.inlineLexer(text, links, options);
-        const xml = inlineTokens.map(onInlineToken).filter(Boolean).join('');
-
-        xml && addUnit(text, xml);
-    }
-
-    function getTag(tag, id, content) {
-        // TODO: support ctype for bpt
-        return '<' + tag + ' id="' + id + '">' + content + '</' + tag + '>';
-    }
-
-    function onInlineToken(token, idx) {
-        var type = token.type,
-            markup = token.markup;
-
-        idx++; // is used to generate `id` starting with 1
-
-        if (type === 'text') return token.text;
-
-        if (['strong', 'em', 'del', 'code', 'autolink', 'nolink'].indexOf(type) > -1) {
-            return getTag('bpt', idx, markup[0]) +
-                    escape(token.text) +
-                getTag('ept', idx, markup[1]);
-        }
-
-        if (type === 'link' || type === 'reflink') {
-            var insideLinkTokens = marked.inlineLexer(token.text, links, options),
-                serializedText = insideLinkTokens.map(onInlineToken).join('');
-
-            // image
-            if (markup[0] === '!') return [
-                getTag('bpt', idx, markup[0] + markup[1]),
-                    serializedText,
-                getTag('ept', idx, markup[2]),
-                getTag('bpt', ++idx, markup[3]),
-                    token.href,
-                getTag('ept', idx, markup[4])
-            ].join('');
-
-            return getTag('bpt', 'l' + idx, markup[0]) +
-                    serializedText +
-                (markup.length === 3 ? (
-                    getTag('ept', 'l' + idx, markup[1][0]) +
-                    getTag('bpt', 'l' + ++idx, markup[1][1]) +
-                        token.href +
-                    getTag('ept', 'l' + idx, markup[2])
-                    ) : getTag('ept', idx, markup[1])
-                );
-        }
-
-        if (type === 'tag') {
-            var tag = htmlParser(token.text)[0];
-
-            if (tag && tag.attrs && (tag.type === 'img' || tag.type === 'iframe')) {
-                tag.attrs.src && addUnit(tag.attrs.src);
-                tag.attrs.alt && addUnit(tag.attrs.alt);
-                return;
-            }
-
-            return getTag('ph', idx, escape(token.text));
-        }
-
-        if (type === 'br') return getTag('ph', idx, markup);
-
-        return token.text;
+        addUnit(text);
     }
 
     function getSegments(text) {
-        marked.inlineLexer(text, links, options).reduce(function(prev, curr, idx) {
-
-            // if (curr.type === 'escape') {
-            //     prev.push(curr.text.replace(/\\/g, '\\\\')); // issue #16;
-            //     return prev;
-            // }
-
-            if (curr.type === 'text') {
-                // Split into segments by `; `, `. `, `! ` and `? `
-                return prev.concat(curr.text.split(/([;\.!\?])\s/));
-            };
-
-            if (curr.markup && curr.href) {
-                prev.push(curr.markup[0] + curr.text + curr.markup[1] + curr.href + curr.markup[2]);
-                return prev;
-            };
-
-            prev.push(curr.markup ?
-                curr.markup[0] + curr.text + curr.markup[1] :
-                curr.text
-            );
-
-            return prev;
-        }, [])
-        // join back false positive segment splits
-        .reduce(function(prev, curr, idx, arr) {
-            if (!prev.length || /^[;\.!\?]$/.test(arr[idx-1])) {
-                prev.push(curr);
-                return prev
-            };
-
-            prev[prev.length - 1] += curr;
-
-            return prev;
-        }, [])
-        // join back false positive like `т. е.`, `т. д.`, etc
-        .reduce(function(prev, curr, idx) {
-            if (prev.length && curr.match(/^["'«]*[а-яёa-z]/)) {
-                prev[prev.length - 1] += ' ' + curr;
-            } else {
-                prev.push(curr);
-            }
-
-            return prev;
-        }, [])
-
-        .forEach(onText);
+        const sentences = text
+          .split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/)
+          .filter(Boolean)
+          .forEach(sentence => onText(sentence));
     }
 
     tokens.forEach(function(token) {
@@ -395,16 +285,6 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         if (type === 'html' || isHtml(text)) return onHTML(text);
 
         getSegments(text);
-    });
-
-    // handle reflinks like
-    // [ym]: https://github.com/ymaps/modules
-    var reflinks = links;
-    Object.keys(reflinks).forEach(function(linkKey) {
-        var link = reflinks[linkKey];
-        getSegments(linkKey);
-        getSegments(link.href);
-        link.title && getSegments(link.title);
     });
 
     var data = {
