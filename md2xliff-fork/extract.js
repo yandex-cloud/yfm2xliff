@@ -9,10 +9,18 @@ const {compose, not} = require('ramda');
 
 const {allPass} = require('ramda');
 
-const flatter = token =>
-  token.children && token.children.length
-    ? flatter(token.children)
-    : token;
+const traverse = fn => token => {
+  fn(token);
+  token.type !== 'image' && token.children && token.children.map(traverse(fn));
+}
+
+const flatter = token => {
+  const state = [];
+
+  traverse(child => state.push(child))(token);
+
+  return state;
+}
 
 const merge = (a, token) => {
   if (token.type === 'link_open') {
@@ -28,7 +36,7 @@ const merge = (a, token) => {
     if (token.content.length) {
       a.merged[idx].content = [
         ...last.content,
-        { body: token.content, type: token.type }
+        { content: token.content, type: token.type }
       ];
 
       if (!last.markup.length) {
@@ -40,7 +48,7 @@ const merge = (a, token) => {
       if (last.markup === '`') {
         a.merged[idx].type = 'code_inline';
 
-        a.merged[idx].content = last.content.map(({body}) => body).join('');
+        a.merged[idx].content = last.content.map(({content}) => content).join('');
       }
 
       a.context = '';
@@ -55,13 +63,18 @@ const merge = (a, token) => {
 const flink =({ type, markup, content }) =>
   type !== 'link' || 
   markup !== 'autolink' &&
-  content.every(({body}) => body !== '{#T}');
+  content.every(({content}) => content !== '{#T}');
 
 const ftype = ({ type }) =>
-  type === 'text' || type === 'fence' || type === 'code_inline' || type === 'link';
+  type === 'text' ||
+  type === 'fence' ||
+  type === 'code_inline' ||
+  type === 'link' ||
+  type === 'image_basic' ||
+  type === 'image';
 
 const falpha = ({ content }) => Array.isArray(content)
-  ? content.every(({body}) => falpha({content: body}))
+  ? content.every(({content}) => falpha({content: content}))
   : content.toUpperCase() !== content.toLowerCase();
 
 const filters = allPass([falpha, ftype, flink]);
@@ -71,16 +84,34 @@ const CommentsIterator = (text) => {
   
   return function*() {
       for (;(this.comments = regexp.exec(text));) {
-
         yield this.comments[1];
-      } }
+      }
+  }
 };
 
-const textmap = (token) => {
-  const it = CommentsIterator(token.content);
+const ImageIterator = (text) => {
+  const regexp = /\!\[(.*)\]\(.*\"(.*)\".*\)/;
 
-  if (it().next().value) {
+  const matches = text.match(regexp)?.slice(1,4) ?? [];
+
+  return function*() {
+      for (const match of matches) {
+        yield match;
+      }
+  }
+}
+
+const textmap = (token) => {
+  const commentsIt = CommentsIterator(token.content);
+
+  if (commentsIt().next().value) {
     token.type = 'comment';
+  }
+
+  const imageIt = ImageIterator(token.content);
+
+  if (imageIt().next().value) {
+    token.type = 'image_basic';
   }
 
   return token;
@@ -154,6 +185,24 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         });
     }
 
+    const onBasicImage = (token) => {
+      const imageIt = ImageIterator(token.content);
+
+      for (const chunk of imageIt()) {
+        getSegments(chunk);
+      }
+    }
+
+    const onImage = (token) => {
+      const {content, attrs} = token;
+
+      getSegments(content);
+
+      const title = attrs.find(attr => attr[0] === 'title');
+
+      title && getSegments(title[1]);
+    }
+
     const onComment = (text) => {
       const it = CommentsIterator(text);
 
@@ -163,11 +212,15 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     }
 
     function onLink(token) {
-      const {content, attrs: [_, title]} = token;
+      let {content, attrs} = token;
 
-      content.map(({body}) => getSegments(body));
+      content = Array.isArray(content) ? content : [content];
 
-      title && title[0] === "title" && getSegments(title[1]);
+      content.map(compose(handleToken, textmap));
+
+      const title = attrs.find(attr => attr[0] === 'title');
+
+      title && getSegments(title[1]);
     }
 
     function onCode(code, lang) {
@@ -265,17 +318,12 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         addUnit(text);
     }
 
-    function getSegments(text) {
-        const sentences = text
-          .split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/)
-          .filter(Boolean)
-          .forEach(sentence => onText(sentence));
-    }
-
-    tokens.forEach(function(token) {
+    function handleToken(token) {
         const type = token.type;
         const text = token.content;
 
+        if (type === 'image') return onImage(token);
+        if (type === 'image_basic') return onBasicImage(token);
         if (type === 'link') return onLink(token);
         if (type === 'comment') return onComment(text);
         if (type === 'table') return onTable(token);
@@ -285,7 +333,16 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         if (type === 'html' || isHtml(text)) return onHTML(text);
 
         getSegments(text);
-    });
+    }
+
+    function getSegments(text) {
+        const sentences = text
+          .split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/)
+          .filter(Boolean)
+          .forEach(sentence => onText(sentence));
+    }
+
+    tokens.forEach(handleToken);
 
     var data = {
         markdownFileName: markdownFileName,
