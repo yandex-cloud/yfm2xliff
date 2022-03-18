@@ -167,12 +167,12 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     srcLang || (srcLang = 'ru-RU');
     trgLang || (trgLang = 'en-US');
 
+    // todo: consider pushing refs onto stack and process them in the end
     function addUnit(text) { 
-        segmentCounter++;
-        skeleton = skeleton.slice(0, position) + skeleton.slice(position).replace(text, function(str, offset) {
-            position += offset + ('%%%' + segmentCounter + '%%%').length;
-            return '%%%' + segmentCounter + '%%%';
-        });
+        skeleton = skeleton.replace(text, (str, offset) =>
+          '%%%' + ++segmentCounter + '%%%'
+        );
+
         units.push({
             id: segmentCounter,
             source: {
