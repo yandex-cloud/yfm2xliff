@@ -17,7 +17,7 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="3">
-        <source xml:lang="ru-RU">Мой любимый поисковик </source>
+        <source xml:lang="ru-RU">Мой любимый поисковик</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="4">
@@ -29,7 +29,7 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="6">
-        <source xml:lang="ru-RU">Я люблю </source>
+        <source xml:lang="ru-RU">Я люблю</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="7">
@@ -37,7 +37,7 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="8">
-        <source xml:lang="ru-RU">Это </source>
+        <source xml:lang="ru-RU">Это</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="9">
@@ -45,7 +45,7 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="10">
-        <source xml:lang="ru-RU">Посмотри на секцию с кодом </source>
+        <source xml:lang="ru-RU">Посмотри на секцию с кодом</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="11">
@@ -53,7 +53,7 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="12">
-        <source xml:lang="ru-RU">Супер </source>
+        <source xml:lang="ru-RU">Супер</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="13">

@@ -25,15 +25,15 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="5">
-        <source xml:lang="ru-RU"> Предложение два?</source>
+        <source xml:lang="ru-RU">Предложение два?</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="6">
-        <source xml:lang="ru-RU"> Предложение три!</source>
+        <source xml:lang="ru-RU">Предложение три!</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="7">
-        <source xml:lang="ru-RU"> Предложение четыре.</source>
+        <source xml:lang="ru-RU">Предложение четыре.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="8">
