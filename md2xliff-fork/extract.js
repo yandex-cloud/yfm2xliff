@@ -5,7 +5,7 @@ const xliffSerialize = require('./xliff-serialize');
 const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
-const {compose, not} = require('ramda');
+const {compose, not, split, trim, flatten, map, filter} = require('ramda');
 
 const {allPass} = require('ramda');
 
@@ -312,12 +312,6 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         });
     }
 
-    function onText(text) {
-        if (text.match(/^[\s]+$/)) return; // should extract lists. If 2 and more spaces don't addUnit
-
-        addUnit(text);
-    }
-
     function handleToken(token) {
         const type = token.type;
         const text = token.content;
@@ -335,12 +329,18 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
         getSegments(text);
     }
 
-    function getSegments(text) {
-        const sentences = text
-          .split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/)
-          .filter(Boolean)
-          .forEach(sentence => onText(sentence));
-    }
+    const splitLines = split(/[\n\r]/);
+
+    const splitSentences = split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/);
+
+    const getSentences = compose(
+        map(trim),
+        flatten,
+        map(filter(Boolean)),
+        map(splitSentences),
+        splitLines);
+
+    const getSegments = compose(map(addUnit), getSentences);
 
     tokens.forEach(handleToken);
 
