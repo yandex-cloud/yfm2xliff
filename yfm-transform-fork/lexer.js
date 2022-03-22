@@ -61,9 +61,11 @@ function lexer(originInput, opts = {}) {
     try {
         const env = {};
 
-        const tokens = md.parse(input, env);
+        return {
+          tokens: md.parse(input, env),
+          meta: md.meta,
+        };
 
-        return tokens;
     } catch (err) {
         log.error(`Error occurred${path ? ` in ${bold(path)}` : ''}`);
         throw err;

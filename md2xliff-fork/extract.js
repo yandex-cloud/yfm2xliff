@@ -5,7 +5,7 @@ const xliffSerialize = require('./xliff-serialize');
 const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
-const {compose, not, split, trim, flatten, map, filter} = require('ramda');
+const {values, compose, not, split, trim, flatten, map, filter} = require('ramda');
 
 const {allPass} = require('ramda');
 
@@ -139,6 +139,22 @@ const typemap = (token) => {
 
 const logger = (token) => console.log(token) || token;
 
+const gettype = value =>
+  !value && typeof value !== 'boolean'
+    ? String(value)
+    : Array.isArray(value)
+      ? 'array'
+      : typeof value;
+
+
+const extractMeta = meta => {
+  const extractor = compose(flatten, filter(Boolean), values, map(extractMeta));
+
+  return gettype(meta) === 'string'
+    ? { type: 'text', content: meta }
+    : extractor(meta);
+}
+
 function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
     markdownStr = markdownStr
         // .replace(/\\/g, '\\\\')// issue #16 ;
@@ -156,11 +172,13 @@ function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLa
     let segmentCounter = 0;
     let position = 0;
 
-    const tokens = lexer(markdownStr, options)
-        .flatMap(flatter)
-        .reduce(merge, { merged: [], context: '' }).merged
-        .filter(filters)
-        .map(typemap);
+    let {tokens, meta} = lexer(markdownStr, options);
+
+    tokens = [...extractMeta(meta), ...tokens]
+      .flatMap(flatter)
+      .reduce(merge, { merged: [], context: '' }).merged
+      .filter(filters)
+      .map(typemap);
 
     markdownFileName || (markdownFileName = 'source.md');
     skeletonFilename || (skeletonFilename = markdownFileName.split('.').shift() + '.skl.md');
