@@ -14,8 +14,13 @@ const traverse = fn => token => {
   token.type !== 'image' && token.children && token.children.map(traverse(fn));
 }
 
-const flatter = token => {
+const flatter = (token, i, tokens) => {
   const state = [];
+
+  const {type, explicit} = tokens[i-1] ?? {};
+
+  if (type === 'yfm_note_title_open' && !explicit)
+    return state;
 
   traverse(child => state.push(child))(token);
 
