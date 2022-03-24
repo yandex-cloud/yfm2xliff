@@ -87,6 +87,7 @@ function notes(md, {lang, path: optPath, log}) {
                 const titleClose = new state.Token('yfm_note_title_close', 'p', -1);
 
                 titleOpen.block = true;
+                titleOpen.explicit = match[2];
                 titleClose.block = true;
                 inlineText.content = match[2] === undefined ? getTitle(type, lang) : match[2];
                 inline.children = [strongOpen, inlineText, strongClose];
