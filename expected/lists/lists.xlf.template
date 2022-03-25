@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="{{root}}/mock/lists/lists.md"
+    source-language="ru-RU" target-language="en-US" datatype="markdown">
+    <header>
+      <skl>
+        <external-file href="{{root}}/mock/lists/lists.skl.md"/>
+      </skl>
+    </header>
+    <body>
+      <trans-unit id="1">
+        <source xml:lang="ru-RU">Списки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source xml:lang="ru-RU">Нумерованный список</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source xml:lang="ru-RU">Первый нумерованный пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source xml:lang="ru-RU">Второй нумерованный пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source xml:lang="ru-RU">Третий нумерованный пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source xml:lang="ru-RU">Маркированные списки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source xml:lang="ru-RU">Пункт списка c звездочкой.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source xml:lang="ru-RU">Пункт списка c звездочкой.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source xml:lang="ru-RU">Пункт списка c звездочкой.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source xml:lang="ru-RU">Пункт списка с минусом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source xml:lang="ru-RU">Пункт списка с минусом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source xml:lang="ru-RU">Пункт списка с минусом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source xml:lang="ru-RU">Пункт списка с плюсом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source xml:lang="ru-RU">Пункт списка с плюсом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source xml:lang="ru-RU">Пункт списка с плюсом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source xml:lang="ru-RU">Список определений</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source xml:lang="ru-RU">Термин 1</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source xml:lang="ru-RU">Определение 1</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source xml:lang="ru-RU">Термин 2</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source xml:lang="ru-RU">Определение 2</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source xml:lang="ru-RU">Вложенные списки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source xml:lang="ru-RU">Первый пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source xml:lang="ru-RU">Вложенный пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source xml:lang="ru-RU">Вложенный пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source xml:lang="ru-RU">Второй пункт.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source xml:lang="ru-RU">Списки с таблицами</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source xml:lang="ru-RU">Таблица с строчным форматированием</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source xml:lang="ru-RU">Заголовок 1</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source xml:lang="ru-RU">Заголовок 2</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source xml:lang="ru-RU">Верхний\^регистр^</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source xml:lang="ru-RU">раз\?два</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source xml:lang="ru-RU">ага, т. е. ты имел ввиду это?</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="33">
+        <source xml:lang="ru-RU">Предложение один.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="34">
+        <source xml:lang="ru-RU">Предложение два?</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="35">
+        <source xml:lang="ru-RU">Предложение три!</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="36">
+        <source xml:lang="ru-RU">Предложение четыре.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="37">
+        <source xml:lang="ru-RU">Полужирный текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="38">
+        <source xml:lang="ru-RU">Курсив</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="39">
+        <source xml:lang="ru-RU">Полужирный курсив</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="40">
+        <source xml:lang="ru-RU">Тоже полужирный курсив</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="41">
+        <source xml:lang="ru-RU">Зачеркнутый текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="42">
+        <source xml:lang="ru-RU">Верхний</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="43">
+        <source xml:lang="ru-RU">регистр</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="44">
+        <source xml:lang="ru-RU">Моноширинный текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="45">
+        <source xml:lang="ru-RU">Моноширинный текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="46">
+        <source xml:lang="ru-RU">Таблица с ссылками</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="47">
+        <source xml:lang="ru-RU">Заголовок 1</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="48">
+        <source xml:lang="ru-RU">Заголовок 2</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="49">
+        <source xml:lang="ru-RU">ссылки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="50">
+        <source xml:lang="ru-RU">текст_ссылки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="51">
+        <source xml:lang="ru-RU">текст_подсказки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="52">
+        <source xml:lang="ru-RU">Мой любимый поисковик</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="53">
+        <source xml:lang="ru-RU">Яндекс</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="54">
+        <source xml:lang="ru-RU">Лучший поисковик</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="55">
+        <source xml:lang="ru-RU">Я люблю</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="56">
+        <source xml:lang="ru-RU">Яндекс Облако</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="57">
+        <source xml:lang="ru-RU">Это</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="58">
+        <source xml:lang="ru-RU">YFM Гайд</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="59">
+        <source xml:lang="ru-RU">Посмотри на секцию с кодом</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="60">
+        <source xml:lang="ru-RU">Комментарий в коде</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="61">
+        <source xml:lang="ru-RU">Супер</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="62">
+        <source xml:lang="ru-RU">челик</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="63">
+        <source xml:lang="ru-RU">Список с кодом</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="64">
+        <source xml:lang="ru-RU">Блок кода</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="65">
+        <source xml:lang="ru-RU">Комментарий</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="66">
+        <source xml:lang="ru-RU">Предложение</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="67">
+        <source xml:lang="ru-RU">Комментарий</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="68">
+        <source xml:lang="ru-RU">в котором инлайн код.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="69">
+        <source xml:lang="ru-RU">Список с медиа</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="70">
+        <source xml:lang="ru-RU">alt-текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="71">
+        <source xml:lang="ru-RU">текст_подсказки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="72">
+        <source xml:lang="ru-RU">Альт-текст картинки внутри ссылки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="73">
+        <source xml:lang="ru-RU">подсказка картинки внутри ссылки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="74">
+        <source xml:lang="ru-RU">Альт-текст реф картинки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="75">
+        <source xml:lang="ru-RU">подсказка реф картинки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="76">
+        <source xml:lang="ru-RU">название_видеохостинга</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="77">
+        <source xml:lang="ru-RU">Список с катом</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="78">
+        <source xml:lang="ru-RU">Первый кат</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="79">
+        <source xml:lang="ru-RU">Заголовок первого ката</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="80">
+        <source xml:lang="ru-RU">Контент первого ката</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="81">
+        <source xml:lang="ru-RU">Второй кат</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="82">
+        <source xml:lang="ru-RU">Заголовок второго ката</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="83">
+        <source xml:lang="ru-RU">Контент второго ката</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="84">
+        <source xml:lang="ru-RU">Список с табами</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="85">
+        <source xml:lang="ru-RU">Первый Таб</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="86">
+        <source xml:lang="ru-RU">Второй Таб</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="87">
+        <source xml:lang="ru-RU">Текст первого таба</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="88">
+        <source xml:lang="ru-RU">Текст второго таба</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="89">
+        <source xml:lang="ru-RU">Первый Таб</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="90">
+        <source xml:lang="ru-RU">Второй Таб</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="91">
+        <source xml:lang="ru-RU">Текст первого таба</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="92">
+        <source xml:lang="ru-RU">Текст второго таба</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="93">
+        <source xml:lang="ru-RU">Список с заметками</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="94">
+        <source xml:lang="ru-RU">Это заметка</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="95">
+        <source xml:lang="ru-RU">Это тоже заметка</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+    </body>
+ </file>
+</xliff>
