@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file original="{{root}}/mock/templates/templates.md"
+    source-language="ru-RU" target-language="en-US" datatype="markdown">
+    <header>
+      <skl>
+        <external-file href="{{root}}/mock/templates/templates.skl.md"/>
+      </skl>
+    </header>
+    <body>
+      <trans-unit id="1">
+        <source xml:lang="ru-RU">Шаблоны</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="2">
+        <source xml:lang="ru-RU">plantuml</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source xml:lang="ru-RU">Текст перед диаграммой</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="4">
+        <source xml:lang="ru-RU">текст после диаграммы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="5">
+        <source xml:lang="ru-RU">Предложение после диаграммы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="6">
+        <source xml:lang="ru-RU">graphviz</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="7">
+        <source xml:lang="ru-RU">Текст перед диаграммой</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="8">
+        <source xml:lang="ru-RU">текст после диаграммы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="9">
+        <source xml:lang="ru-RU">Предложение после диаграммы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="10">
+        <source xml:lang="ru-RU">LaTeX</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="11">
+        <source xml:lang="ru-RU">Формула</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="12">
+        <source xml:lang="ru-RU">внутри строки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="13">
+        <source xml:lang="ru-RU">Формула на несколько</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="14">
+        <source xml:lang="ru-RU">строк.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="15">
+        <source xml:lang="ru-RU">текст после формулы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="16">
+        <source xml:lang="ru-RU">Это бабосики $20,000, а не формула</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="17">
+        <source xml:lang="ru-RU">Условные операторы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="18">
+        <source xml:lang="ru-RU">Какой-то текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="19">
+        <source xml:lang="ru-RU">При тарификации вычислительных ресурсов учитывается количество ядер (vCPU), объем памяти, выделенный для приложения, и время выполнения приложения:</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source xml:lang="ru-RU">Количество ядер, указанное при создании ревизии, измеряется в vCPU и является положительным вещественным числом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="21">
+        <source xml:lang="ru-RU">Объем памяти, указанный при создании ревизии, измеряется в ГБ.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="22">
+        <source xml:lang="ru-RU">Суммарное время работы контейнера измеряется в часах, и округляется в большую сторону до ближайшего значения, кратного 100 мс.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="23">
+        <source xml:lang="ru-RU">какой-то текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="24">
+        <source xml:lang="ru-RU">При тарификации вычислительных ресурсов учитывается количество ядер (vCPU), объем памяти, выделенный для приложения, и время выполнения приложения:</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="25">
+        <source xml:lang="ru-RU">Количество ядер, указанное при создании ревизии, измеряется в vCPU и является положительным вещественным числом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="26">
+        <source xml:lang="ru-RU">Объем памяти, указанный при создании ревизии, измеряется в ГБ.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="27">
+        <source xml:lang="ru-RU">Суммарное время работы контейнера измеряется в часах, и округляется в большую сторону до ближайшего значения, кратного 100 мс.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="28">
+        <source xml:lang="ru-RU">При тарификации вычислительных ресурсов учитывается количество ядер (vCPU), объем памяти, выделенный для приложения, и время выполнения приложения:</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="29">
+        <source xml:lang="ru-RU">Количество ядер, указанное при создании ревизии, измеряется в vCPU и является положительным вещественным числом.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source xml:lang="ru-RU">Объем памяти, указанный при создании ревизии, измеряется в ГБ.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="31">
+        <source xml:lang="ru-RU">Суммарное время работы контейнера измеряется в часах, и округляется в большую сторону до ближайшего значения, кратного 100 мс.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="32">
+        <source xml:lang="ru-RU">Какой-то текст</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="33">
+        <source xml:lang="ru-RU">Apple</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="34">
+        <source xml:lang="ru-RU">Android</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="35">
+        <source xml:lang="ru-RU">продолжение текста.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="36">
+        <source xml:lang="ru-RU">Вставка кода из файла</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="37">
+        <source xml:lang="ru-RU">Переиспользование контента</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="38">
+        <source xml:lang="ru-RU">Циклы</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="39">
+        <source xml:lang="ru-RU">Предложение перед циклом</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="40">
+        <source xml:lang="ru-RU">Текст внутри цикла {{user}}</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="41">
+        <source xml:lang="ru-RU">Предложение после цикла</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="42">
+        <source xml:lang="ru-RU">Текст перед циклом</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="43">
+        <source xml:lang="ru-RU">Текст внутри цикла {{user}}</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="44">
+        <source xml:lang="ru-RU">Текст после цикла</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="45">
+        <source xml:lang="ru-RU">Фильтры</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="46">
+        <source xml:lang="ru-RU">Привет {{ user.name | capitalize }}!</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="47">
+        <source xml:lang="ru-RU">{{ users | length }}</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="48">
+        <source xml:lang="ru-RU">Функции</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="49">
+        <source xml:lang="ru-RU">Привет {{ user.name.slice(1) }}!</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="50">
+        <source xml:lang="ru-RU">Переменные</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="51">
+        <source xml:lang="ru-RU">Создайте</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="52">
+        <source xml:lang="ru-RU">виртуальную машину</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="53">
+        <source xml:lang="ru-RU">Windows с помощью сервиса {{ compute-short-name }} в консоли управления {{ yandex-cloud }} и подключитесь к ней.</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+    </body>
+ </file>
+</xliff>
