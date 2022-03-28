@@ -5,9 +5,17 @@ const xliffSerialize = require('./xliff-serialize');
 const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
-const {values, compose, not, split, trim, flatten, map, filter} = require('ramda');
-
-const {allPass} = require('ramda');
+const {
+  replace,
+  values,
+  compose,
+  split,
+  trim,
+  flatten,
+  map,
+  filter,
+  allPass,
+} = require('ramda');
 
 const traverse = fn => token => {
   fn(token);
@@ -160,24 +168,34 @@ const extractMeta = meta => {
     : extractor(meta);
 }
 
-function extract(markdownStr, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
-    markdownStr = markdownStr
-        // .replace(/\\/g, '\\\\')// issue #16 ;
-        // copy/paste from marked.js Lexer.prototype.lex
-        .replace(/\r?\n|\r/g, '\n')
-        .replace(/\t/g, '    ')
-        .replace(/\u00a0/g, ' ')
-        .replace(/\u2424/g, '\n');
+const preprocess = compose(
+  // include, code, if, for directives
+  replace(/\{%\s(include|code|if|else|endif|for|endfor)\s[^\{]*%\}/g, '\n'),
+  // inline LaTex directives
+  replace(/\$[\S\$]*\$(?!\d)/g, '\n'),
+  // multiline LaTex directives
+  replace(/\$\$\\begin[^\$]*?\\end[^\$]*?\$\$/g, '\n'),
+  // graphviz directives
+  replace(/%%\(graphviz[^%]*?%%/g, '\n'),
+  // plantuml directives
+  replace(/@startuml[^@]*?@enduml/g, '\n'));
 
-    const lexer = options.lexer;
+const normalize = compose(
+  replace(/\u2424/g, '\n'),
+  replace(/\u00a0/g, ' '),
+  replace(/\t/g, '    '),
+  replace(/\r?\n|\r/g, '\n'));
 
-    let skeleton = markdownStr;
+function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
+    const tokenize = compose(options.lexer(options), preprocess, normalize);
+
+    let skeleton = normalize(md);
     let links = {};
     let units = [];
     let segmentCounter = 0;
     let position = 0;
 
-    let {tokens, meta} = lexer(markdownStr, options);
+    let {tokens, meta} = tokenize(md);
 
     tokens = [...extractMeta(meta), ...tokens]
       .flatMap(flatter)
