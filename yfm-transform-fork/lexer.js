@@ -1,7 +1,7 @@
 const {bold} = require('chalk');
 const MarkdownIt = require('markdown-it');
 const attrs = require('markdown-it-attrs');
-
+const {curry} = require('lodash');
 const log = require('./log');
 const makeHighlight = require('./highlight');
 const liquid = require('./liquid');
@@ -20,16 +20,16 @@ const yfmTable = require('./plugins/table');
 const escape = require('./plugins/escape');
 
 // ADDED: support lexer function
-function lexer(originInput, opts = {}) {
+function lexer(opts, originInput) {
     const {
         vars = {}, path, extractTitle: extractTitleOption,
-        allowHTML = false, linkify = false, breaks = true, conditionsInCode = false, disableLiquid = false,
+        allowHTML = false, linkify = false, breaks = true, conditionsInCode = false, disableLiquid = true,
         leftDelimiter = '{', rightDelimiter = '}',
         isLiquided = false,
         plugins = [meta, deflist, cut, notes, anchors, tabs, code, sup, video, monospace, yfmTable],
         highlightLangs = {},
         ...customOptions
-    } = opts;
+    } = opts ?? {};
 
     const pluginOptions = {
         ...customOptions,
@@ -72,4 +72,4 @@ function lexer(originInput, opts = {}) {
     }
 }
 
-module.exports = lexer;
+module.exports = curry(lexer);
