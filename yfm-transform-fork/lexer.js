@@ -2,6 +2,13 @@ const {bold} = require('chalk');
 const MarkdownIt = require('markdown-it');
 const attrs = require('markdown-it-attrs');
 const {curry} = require('lodash');
+
+// additional features
+const sub = require('markdown-it-sub');
+const ins = require('markdown-it-ins');
+const foot = require('markdown-it-footnote');
+const todo = require('markdown-it-checkbox');
+
 const log = require('./log');
 const makeHighlight = require('./highlight');
 const liquid = require('./liquid');
@@ -26,7 +33,7 @@ function lexer(opts, originInput) {
         allowHTML = false, linkify = false, breaks = true, conditionsInCode = false, disableLiquid = true,
         leftDelimiter = '{', rightDelimiter = '}',
         isLiquided = false,
-        plugins = [meta, deflist, cut, notes, anchors, tabs, code, sup, video, monospace, yfmTable],
+        plugins = [meta, deflist, cut, notes, anchors, tabs, code, sup, video, monospace, yfmTable, sub, ins, foot, todo],
         highlightLangs = {},
         ...customOptions
     } = opts ?? {};
