@@ -24,10 +24,6 @@
         <source xml:lang="ru-RU">Комментарий внутри ката.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="5">
-        <source xml:lang="ru-RU">Коммент внутри инлайн код блока</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
     </body>
  </file>
 </xliff>

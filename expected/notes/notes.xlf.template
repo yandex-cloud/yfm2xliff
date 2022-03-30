@@ -249,46 +249,42 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="61">
-        <source xml:lang="ru-RU">Комментарий</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="62">
         <source xml:lang="ru-RU">Заметка с катом</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="63">
+      <trans-unit id="62">
         <source xml:lang="ru-RU">Заголовок ката</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="64">
+      <trans-unit id="63">
         <source xml:lang="ru-RU">Контент, который отобразится по нажатию.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="65">
+      <trans-unit id="64">
         <source xml:lang="ru-RU">Заметка с табами</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="66">
+      <trans-unit id="65">
         <source xml:lang="ru-RU">Первый Таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="67">
+      <trans-unit id="66">
         <source xml:lang="ru-RU">Второй Таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="68">
+      <trans-unit id="67">
         <source xml:lang="ru-RU">Текст первого таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="69">
+      <trans-unit id="68">
         <source xml:lang="ru-RU">Текст второго таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="70">
+      <trans-unit id="69">
         <source xml:lang="ru-RU">Заметка с заметкой</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="71">
+      <trans-unit id="70">
         <source xml:lang="ru-RU">Надеюсь ты любишь заметки, ведь я положил заметку в твою заметку.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>

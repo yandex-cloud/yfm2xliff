@@ -49,14 +49,10 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="11">
-        <source xml:lang="ru-RU">Комментарий в коде</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="12">
         <source xml:lang="ru-RU">Супер</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="13">
+      <trans-unit id="12">
         <source xml:lang="ru-RU">челик</source>
         <target xml:lang="en-US"></target>
       </trans-unit>

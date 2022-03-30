@@ -221,62 +221,58 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="54">
-        <source xml:lang="ru-RU">Комментарий</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="55">
         <source xml:lang="ru-RU">Таблица с медиа</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="56">
+      <trans-unit id="55">
         <source xml:lang="ru-RU">Заголовок 1</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="57">
+      <trans-unit id="56">
         <source xml:lang="ru-RU">Заголовок 2</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="58">
+      <trans-unit id="57">
         <source xml:lang="ru-RU">картинка стандартная</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="59">
+      <trans-unit id="58">
         <source xml:lang="ru-RU">alt-текст</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="60">
+      <trans-unit id="59">
         <source xml:lang="ru-RU">текст_подсказки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="61">
+      <trans-unit id="60">
         <source xml:lang="ru-RU">картинка в ссылке</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="62">
+      <trans-unit id="61">
         <source xml:lang="ru-RU">альт-текст картинки в ссылке</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="63">
+      <trans-unit id="62">
         <source xml:lang="ru-RU">подсказка картинки в ссылке</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="64">
+      <trans-unit id="63">
         <source xml:lang="ru-RU">реф картинка</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="65">
+      <trans-unit id="64">
         <source xml:lang="ru-RU">альт-текст реф картнки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="66">
+      <trans-unit id="65">
         <source xml:lang="ru-RU">подсказка реф картинки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="67">
+      <trans-unit id="66">
         <source xml:lang="ru-RU">видео</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="68">
+      <trans-unit id="67">
         <source xml:lang="ru-RU">название_видеохостинга</source>
         <target xml:lang="en-US"></target>
       </trans-unit>

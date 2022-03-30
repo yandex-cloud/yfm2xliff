@@ -221,122 +221,114 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="54">
-        <source xml:lang="ru-RU">Комментарий в коде</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="55">
         <source xml:lang="ru-RU">Супер</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="56">
+      <trans-unit id="55">
         <source xml:lang="ru-RU">челик</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="57">
+      <trans-unit id="56">
         <source xml:lang="ru-RU">код</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="58">
+      <trans-unit id="57">
         <source xml:lang="ru-RU">Комментарий в коде</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="59">
+      <trans-unit id="58">
         <source xml:lang="ru-RU">инлайн-код</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="60">
-        <source xml:lang="ru-RU">Комментарий в коде</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="61">
+      <trans-unit id="59">
         <source xml:lang="ru-RU">каты</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="62">
+      <trans-unit id="60">
         <source xml:lang="ru-RU">Кат внутри таблицы</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="63">
+      <trans-unit id="61">
         <source xml:lang="ru-RU">Контент, который отобразится по нажатию.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="64">
+      <trans-unit id="62">
         <source xml:lang="ru-RU">табы</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="65">
+      <trans-unit id="63">
         <source xml:lang="ru-RU">Первый Таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="66">
+      <trans-unit id="64">
         <source xml:lang="ru-RU">Второй Таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="67">
+      <trans-unit id="65">
         <source xml:lang="ru-RU">Текст первого таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="68">
+      <trans-unit id="66">
         <source xml:lang="ru-RU">Текст второго таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="69">
+      <trans-unit id="67">
         <source xml:lang="ru-RU">заметки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="70">
+      <trans-unit id="68">
         <source xml:lang="ru-RU">Это примечание.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="71">
+      <trans-unit id="69">
         <source xml:lang="ru-RU">Это совет.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="72">
+      <trans-unit id="70">
         <source xml:lang="ru-RU">Это важная информация.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="73">
+      <trans-unit id="71">
         <source xml:lang="ru-RU">Это предупреждение.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="74">
+      <trans-unit id="72">
         <source xml:lang="ru-RU">Это заметка со своим заголовком.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="75">
+      <trans-unit id="73">
         <source xml:lang="ru-RU">Это заметка без заголовка.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="76">
+      <trans-unit id="74">
         <source xml:lang="ru-RU">медиа</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="77">
+      <trans-unit id="75">
         <source xml:lang="ru-RU">alt-текст</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="78">
+      <trans-unit id="76">
         <source xml:lang="ru-RU">текст_подсказки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="79">
+      <trans-unit id="77">
         <source xml:lang="ru-RU">Альт-текст картинки внутри ссылки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="80">
+      <trans-unit id="78">
         <source xml:lang="ru-RU">подсказка картинки внутри ссылки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="81">
+      <trans-unit id="79">
         <source xml:lang="ru-RU">Альт-текст реф картинки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="82">
+      <trans-unit id="80">
         <source xml:lang="ru-RU">подсказка реф картинки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="83">
+      <trans-unit id="81">
         <source xml:lang="ru-RU">название_видеохостинга</source>
         <target xml:lang="en-US"></target>
       </trans-unit>

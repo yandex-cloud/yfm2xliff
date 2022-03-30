@@ -12,5 +12,5 @@
 
 %%%6%%% **[%%%7%%%](https://cloud.yandex.com)**.
 %%%8%%% [%%%9%%%](https://yadocs.tech).
-%%%10%%% [`{% cut "Заголовок ката" %} контент {% endcut %} [//]: %%%11%%%`](#code).
-%%%12%%% [^%%%13%%%^](https://en.wikipedia.org/wiki/Major_Grom_(2017_film)).
+%%%10%%% [`{% cut "Заголовок ката" %} контент {% endcut %} [//]: Комментарий`](#code).
+%%%11%%% [^%%%12%%%^](https://en.wikipedia.org/wiki/Major_Grom_(2017_film)).

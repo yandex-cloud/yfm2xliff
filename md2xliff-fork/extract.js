@@ -81,7 +81,6 @@ const flink =({ type, markup, content }) =>
 const ftype = ({ type }) =>
   type === 'text' ||
   type === 'fence' ||
-  type === 'code_inline' ||
   type === 'link' ||
   type === 'image_basic' ||
   type === 'image';
@@ -131,8 +130,7 @@ const textmap = (token) => {
 }
 
 const codemap = (token) => {
-  // for the inline code tokens making assumption of the markdown language
-  token.lang = !token.info.length && token.type === 'code_inline' ? 'markdown' : token.info;
+  token.lang = token.info;
   token.type = 'code';
 
   return token;
@@ -143,7 +141,6 @@ const typemap = (token) => {
     case 'text':
       return textmap(token);
     case 'fence':
-    case 'code_inline':
       return codemap(token);
     default:
       return token;

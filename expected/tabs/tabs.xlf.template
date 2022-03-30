@@ -305,102 +305,98 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="75">
-        <source xml:lang="ru-RU">Комментарий</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="76">
         <source xml:lang="ru-RU">содержит инлайн код.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="77">
+      <trans-unit id="76">
         <source xml:lang="ru-RU">Таб с катом</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="78">
+      <trans-unit id="77">
         <source xml:lang="ru-RU">Первый кат</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="79">
+      <trans-unit id="78">
         <source xml:lang="ru-RU">Второй кат</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="80">
+      <trans-unit id="79">
         <source xml:lang="ru-RU">Заголовок первого ката</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="81">
+      <trans-unit id="80">
         <source xml:lang="ru-RU">Контент, который отобразится по нажатию.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="82">
+      <trans-unit id="81">
         <source xml:lang="ru-RU">Заголовок второго ката</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="83">
+      <trans-unit id="82">
         <source xml:lang="ru-RU">Контент, который отобразится по нажатию.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="84">
+      <trans-unit id="83">
         <source xml:lang="ru-RU">Таб с табами</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="85">
+      <trans-unit id="84">
         <source xml:lang="ru-RU">Первый Таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="86">
+      <trans-unit id="85">
         <source xml:lang="ru-RU">Второй Таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="87">
+      <trans-unit id="86">
         <source xml:lang="ru-RU">Первый вложенный таб</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="87">
+        <source xml:lang="ru-RU">Текст первого вложенного таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="88">
-        <source xml:lang="ru-RU">Текст первого вложенного таба</source>
+        <source xml:lang="ru-RU">Второй вложенный таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="89">
-        <source xml:lang="ru-RU">Второй вложенный таб</source>
+        <source xml:lang="ru-RU">Текст второго вложенного таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="90">
-        <source xml:lang="ru-RU">Текст второго вложенного таба</source>
-        <target xml:lang="en-US"></target>
-      </trans-unit>
-      <trans-unit id="91">
         <source xml:lang="ru-RU">Первый вложенный таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="92">
+      <trans-unit id="91">
         <source xml:lang="ru-RU">Текст первого вложенного таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="93">
+      <trans-unit id="92">
         <source xml:lang="ru-RU">Второй вложенный таб</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="94">
+      <trans-unit id="93">
         <source xml:lang="ru-RU">Текст второго вложенного таба</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="95">
+      <trans-unit id="94">
         <source xml:lang="ru-RU">Таб с заметками</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="96">
+      <trans-unit id="95">
         <source xml:lang="ru-RU">Заметка Информация</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="97">
+      <trans-unit id="96">
         <source xml:lang="ru-RU">Заметка Предупреждение</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="98">
+      <trans-unit id="97">
         <source xml:lang="ru-RU">Информация</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
-      <trans-unit id="99">
+      <trans-unit id="98">
         <source xml:lang="ru-RU">Предупреждение</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
