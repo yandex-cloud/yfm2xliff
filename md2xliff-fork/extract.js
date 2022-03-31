@@ -1,11 +1,21 @@
 const escape = require('escape-html');
 const htmlParser = require('./html-parser');
 const isHtml = require('is-html');
+const {highlight, highlightAuto} = require('highlight.js');
 const xliffSerialize = require('./xliff-serialize');
 const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
 const {
+  join,
+  tryCatch,
+  is,
+  chain,
+  useWith,
+  complement,
+  equals,
+  toLower,
+  toUpper,
   replace,
   values,
   compose,
@@ -261,82 +271,60 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
       title && getSegments(title[1]);
     }
 
-    function onCode(code, lang) {
-        let comments;
+    const lift = depthLense => predicate => lifteeLense => {
+      const lifter = node =>
+        predicate(node)
+          ? lifteeLense(node)
+          : depthLense(node) && chain(lifter, depthLense(node));
 
-        if (lang === 'markdown') {
-          onComment(code);
-        }
-
-        if (lang === 'css') {
-            try {
-                postcss.parse(code).walkComments(function(comment) {
-                    getSegments(comment.text);
-                });
-            } catch(err) {
-                hideErrors || console.log('postCSS was not able to parse comments. Code was saved as is.', err, code);
-                getSegments(code);
-            }
-
-            return;
-        }
-
-        if (lang === 'html') {
-            htmlParser(code).forEach(tag => {
-                tag.type === 'comment' && getSegments(tag.text);
-                // TODO:
-                // support tag.type === 'script'
-                // support tag.type === 'style'
-            });
-
-            return;
-        }
-
-        // FIXME: extract for bash
-        if (lang !== 'js' && lang !== 'javascript') {
-            var genericCommentRegexp = /#\s([\s\S].*)/g;
-            while ((comments = genericCommentRegexp.exec(code)) !== null) {
-                getSegments(comments[1]);
-            }
-
-            return;
-        }
-
-        try {
-            comments = extractComments.fromString(code);
-        } catch(err) {
-            try {
-                comments = extractComments.fromString('(' + code + ')');
-            } catch(err) {
-                hideErrors || console.log('Esprima was not able to parse comments. Fallback to regexp', err, code);
-
-                var jsCommentRegexp = /\/\/([\s\S].*)/g;
-                while ((comments = jsCommentRegexp.exec(code)) !== null) {
-                    getSegments(comments[1]);
-                }
-
-                return;
-            }
-        }
-
-        comments && comments.forEach(function(comment) {
-            getSegments(comment.value);
-        });
+      return lifter;
     }
 
-    function onHTML(text) {
-        // TODO: divide to block and inline markup first
-        htmlParser(text).forEach(tag => {
-            if (tag.attrs) {
-                ['name', 'src', 'alt'].forEach(item => {
-                    tag.attrs[item] && getSegments(tag.attrs[item]);
-                });
-            };
+    function handleCode(code, lang) {
+      if (lang === 'markdown') {
+        return onComment(code);
+      }
 
-            if (tag.type === 'text' || tag.type === 'comment' ) {
-                getSegments(tag.text);
-            }
-        });
+      const errorHandler = (err, value) => {
+        console.info(`language: ${lang} not supported`);
+        console.info('failed to parse comments from code block:')
+        console.info(code);
+
+        return {_emitter:{rootNode: {children: []}}, language: ''};
+      }
+
+      const parser = tryCatch(lang
+        ? highlight.bind(this, code, { language: lang })
+        : highlightAuto.bind(this, code), errorHandler);
+
+      const { _emitter: {rootNode: children}, language} = parser();
+
+      const stripPunct = compose(
+        // leading non-alphanum
+        replace(/^[^a-zA-Zа-яА-ЯёЁ]*/g, ''),
+        // trailling non-alphanum
+        replace(/[^a-zA-Zа-яА-ЯёЁ]*$/g, '')); 
+
+      const kindLense = ({ kind }) => kind;
+
+      const iscomment = compose(equals('comment'), kindLense)
+
+      const childrenLense = ({ children }) => children;
+
+      const lifteeLense = compose(join(''), childrenLense);
+
+      const liftComments = compose(
+        filter(is(String)),
+        lift(childrenLense)(iscomment)(lifteeLense));
+
+      const getComments = compose(
+        map(getSegments),
+        filter(Boolean),
+        map(stripPunct),
+        chain(splitLines),
+        liftComments);
+
+      getComments(children);
     }
 
     function onTable(table) {
@@ -360,7 +348,7 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         if (type === 'comment') return onComment(text);
         if (type === 'table') return onTable(token);
         if (typeof text === 'undefined') return;
-        if (type === 'code') return onCode(text, token.lang);
+        if (type === 'code') return handleCode(text, token.lang);
         // NOTE: isHtml(text) fails when there's `<script>` in text
         if (type === 'html' || isHtml(text)) return onHTML(text);
 

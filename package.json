@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ramda/composep": "^0.26.1",
+    "highlight.js": "^11.5.0",
     "ramda": "^0.28.0"
   }
 }
