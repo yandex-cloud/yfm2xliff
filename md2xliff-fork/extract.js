@@ -1,6 +1,6 @@
 const escape = require('escape-html');
-const htmlParser = require('./html-parser');
 const isHtml = require('is-html');
+const {parseFragment} = require('parse5');
 const {highlight, highlightAuto} = require('highlight.js');
 const xliffSerialize = require('./xliff-serialize');
 const postcss = require('postcss');
@@ -25,6 +25,9 @@ const {
   map,
   filter,
   allPass,
+  anyPass,
+  find,
+  propEq,
 } = require('ramda');
 
 const traverse = fn => token => {
@@ -93,7 +96,8 @@ const ftype = ({ type }) =>
   type === 'fence' ||
   type === 'link' ||
   type === 'image_basic' ||
-  type === 'image';
+  type === 'image' ||
+  type === 'html_block';
 
 const falpha = ({ content }) => Array.isArray(content)
   ? content.every(({content}) => falpha({content: content}))
@@ -280,6 +284,12 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
       return lifter;
     }
 
+    const stripPunct = compose(
+      // leading non-alphanum
+      replace(/^[^a-zA-Zа-яА-ЯёЁ]*/g, ''),
+      // trailling non-alphanum
+      replace(/[^a-zA-Zа-яА-ЯёЁ]*$/g, ''));
+
     function handleCode(code, lang) {
       if (lang === 'markdown') {
         return onComment(code);
@@ -297,13 +307,7 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         ? highlight.bind(this, code, { language: lang })
         : highlightAuto.bind(this, code), errorHandler);
 
-      const { _emitter: {rootNode: children}, language} = parser();
-
-      const stripPunct = compose(
-        // leading non-alphanum
-        replace(/^[^a-zA-Zа-яА-ЯёЁ]*/g, ''),
-        // trailling non-alphanum
-        replace(/[^a-zA-Zа-яА-ЯёЁ]*$/g, '')); 
+      const { _emitter: {rootNode: children}, language} = parser(); 
 
       const kindLense = ({ kind }) => kind;
 
@@ -327,15 +331,40 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
       getComments(children);
     }
 
-    function onTable(table) {
-        table.header.forEach(function(text) {
-            getSegments(text);
-        });
-        table.cells.forEach(function(row) {
-            row.forEach(function(text) {
-                getSegments(text);
-            });
-        });
+    const propLens = prop => obj => obj[prop];
+
+    function handleHTML(token) {
+      const tree = parseFragment(token.content);
+
+      const istext = compose(equals('#text'), propLens('nodeName'));
+
+      const isimg = compose(equals('img'), propLens('nodeName'));
+
+      const filters = anyPass([istext, isimg]);
+
+      const imageLens = compose(
+        propLens('value'),
+        find(propEq('name', 'alt')),
+        propLens('attrs')); 
+
+      const leafLens = (node) => istext(node)
+        ? propLens('value')(node)
+        : isimg(node)
+          ? imageLens(node)
+          : "";
+
+      const liftText = compose(
+        filter(Boolean),
+        map(stripPunct),
+        lift(propLens('childNodes'))(filters)(leafLens)); 
+
+      const getHTML = compose(
+        map(getSegments),
+        liftText,
+        parseFragment,
+        propLens('content'));
+
+      getHTML(token);
     }
 
     function handleToken(token) {
@@ -343,6 +372,7 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         const text = token.content;
 
         if (type === 'image') return onImage(token);
+        if (type === 'html_block') return handleHTML(token);
         if (type === 'image_basic') return onBasicImage(token);
         if (type === 'link') return onLink(token);
         if (type === 'comment') return onComment(text);
@@ -350,7 +380,6 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         if (typeof text === 'undefined') return;
         if (type === 'code') return handleCode(text, token.lang);
         // NOTE: isHtml(text) fails when there's `<script>` in text
-        if (type === 'html' || isHtml(text)) return onHTML(text);
 
         getSegments(text);
     }
