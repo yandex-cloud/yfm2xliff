@@ -30,7 +30,7 @@ const escape = require('./plugins/escape');
 function lexer(opts, originInput) {
     const {
         vars = {}, path, extractTitle: extractTitleOption,
-        allowHTML = false, linkify = false, breaks = true, conditionsInCode = false, disableLiquid = true,
+        allowHTML = true, linkify = false, breaks = true, conditionsInCode = false, disableLiquid = true,
         leftDelimiter = '{', rightDelimiter = '}',
         isLiquided = false,
         plugins = [meta, deflist, cut, notes, anchors, tabs, code, sup, video, monospace, yfmTable, sub, ins, foot, todo],
