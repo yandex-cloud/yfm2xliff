@@ -1,13 +1,14 @@
 {
   "name": "yfm2xliff",
+  "main": "cmd/index.js",
   "version": "1.0.0",
   "description": "Здесь лежит два скопированных репозитория: yfm-transform и md2xliff",
-  "main": "constants.js",
   "scripts": {
     "preinstall": "cd md2xliff-fork && npm i && cd ../yfm-transform-fork  && npm i && cd ..",
     "postinstall": "node scripts/postinstall.mjs",
     "test": "jest"
   },
+  "bin": "cmd/index.js",
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -17,6 +18,7 @@
     "@ramda/composep": "^0.26.1",
     "highlight.js": "^11.5.0",
     "parse5": "^6.0.1",
-    "ramda": "^0.28.0"
+    "ramda": "^0.28.0",
+    "yargs": "^17.4.0"
   }
 }
