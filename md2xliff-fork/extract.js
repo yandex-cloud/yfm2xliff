@@ -7,6 +7,9 @@ const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
 const {
+  endsWith,
+  take,
+  takeLast,
   join,
   tryCatch,
   is,
@@ -219,6 +222,26 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
     srcLang || (srcLang = 'ru-RU');
     trgLang || (trgLang = 'en-US');
 
+    const splitLines = split(/[\n\r]/);
+
+    const splitSentences = split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/);
+
+    const getSentences = compose(
+        map(trim),
+        flatten,
+        map(filter(Boolean)),
+        map(splitSentences),
+        splitLines);
+
+    const getSegments = compose(map(addUnit), getSentences);
+
+    const findTitle = compose(v => v ?? [], find(compose(
+      endsWith([true]),
+      map(equals('title')),
+      take(1))));
+
+    const getTitleSegments = compose(map(getSegments), takeLast(1), findTitle);
+
     // todo: consider pushing refs onto stack and process them in the end
     function addUnit(text) { 
         skeleton = skeleton.replace(text, (str, offset) =>
@@ -250,9 +273,7 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
 
       getSegments(content);
 
-      const title = attrs.find(attr => attr[0] === 'title');
-
-      title && getSegments(title[1]);
+      attrs && getTitleSegments(attrs);
     }
 
     const onComment = (text) => {
@@ -270,9 +291,8 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
 
       content.map(compose(handleToken, textmap));
 
-      const title = attrs.find(attr => attr[0] === 'title');
+      attrs && getTitleSegments(attrs);
 
-      title && getSegments(title[1]);
     }
 
     const lift = depthLense => predicate => lifteeLense => {
@@ -383,19 +403,6 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
 
         getSegments(text);
     }
-
-    const splitLines = split(/[\n\r]/);
-
-    const splitSentences = split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/);
-
-    const getSentences = compose(
-        map(trim),
-        flatten,
-        map(filter(Boolean)),
-        map(splitSentences),
-        splitLines);
-
-    const getSegments = compose(map(addUnit), getSentences);
 
     tokens.forEach(handleToken);
 
