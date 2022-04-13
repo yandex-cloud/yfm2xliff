@@ -1,11 +1,10 @@
 const {promises: {writeFile, mkdir, readdir, lstat}} = require('fs');
-const {join} = require('path');
+const path = require('path');
 const composeP = require('@ramda/composep');
 const {
+  zip,
   length,
   ifElse,
-  isEmpty,
-  isNil,
   identity,
   compose,
   transpose,
@@ -19,19 +18,26 @@ const {
 const reconstruct = require('../md2xliff-fork/xliff-reconstruct');
 
 const {
+  logname,
+  mdSuffixRgxp,
+  sklSuffixRgxp,
+  xlfSuffixRgxp,
+  mdSuffix,
+  sklSuffix,
+  xlfSuffix,
   walk,
   readFile,
+  writeTo,
+  logger,
+  failed,
   failures,
   successes,
   asyncify,
+  stripPath,
   stripFilename,
+  flattenResults,
   unwrapPromises,
 } = require('./common');
-
-const xlfSuffixRgxp = /\.xlf$/g;
-const sklSuffixRgxp = /\.skl\.md$/g;
-
-const mdSuffix = '.md';
 
 const files = composeP(unwrapPromises, flatten, walk);
 const xlfFilenames = composeP(filter(test(xlfSuffixRgxp)), files);
@@ -40,46 +46,48 @@ const sklFilenames = composeP(filter(test(sklSuffixRgxp)), files);
 const sklStrings = composeP(unwrapPromises, map(readFile('utf8')), sklFilenames);
 const xlfStrings = composeP(unwrapPromises, map(readFile('utf8')), xlfFilenames);
 
-const generator = async ([xliff, skeleton, path]) =>
-  reconstruct(xliff, skeleton, (ctx, reconstructed) => [reconstructed, path]);
+const generator = async ([xliff, skeleton, path, failed]) =>
+  reconstruct(xliff, skeleton, (ctx, generated) => [generated, path, !length(generated)]);
 
 const assemble = composeP(unwrapPromises, map(generator), asyncify(transpose));
 
-const notAssembled = ([md]) => isEmpty(md);
-
-const _folders = async ([md, path]) => {
+const _folders = async ([md, path, failed]) => {
   await mkdir(stripFilename(path), {recursive: true});
 
-  return [md, path];
+  return [md, path, failed];
 }
 
 const folders = ifElse(
-  notAssembled,
+  failed,
   asyncify(identity),
   _folders,
 );
 
-const _touch = async ([md, path]) => writeFile(path, md);
+const _touch = async ([md, path, failed]) => Promise.all([writeFile(path, md), failed]);
 
 const touch = ifElse(
-  notAssembled,
+  failed,
   asyncify(identity),
   _touch,
 );
 
-const write = composeP(touch, folders);
+const write = composeP(unwrapPromises, touch, folders);
 
 const composer = async (input, output) => {
   const inputRgxp = RegExp(`^${input}`, 'g'); 
+  const outputRgxp = RegExp(`^${output}`, 'g'); 
 
-  const prependOutput = p => join(output, p);
+  const prependInput = p => path.join(input, p);
+  const prependOutput = p => path.join(output, p);
+
+  const outputPath = compose(
+    prependOutput,
+    stripPath(inputRgxp, sklSuffixRgxp));
 
   const mdFilenames = composeP(
-    map(compose(
-      replace(sklSuffixRgxp, mdSuffix),
-      prependOutput,
-      replace(inputRgxp, ''))),
-    sklFilenames);
+    map(compose(s => s + mdSuffix, outputPath)),
+    sklFilenames,
+  );
 
   const jobs = await Promise.all([
     xlfStrings(input),
@@ -87,13 +95,52 @@ const composer = async (input, output) => {
     mdFilenames(input),
   ]);
 
-  const go = composeP(flatten, unwrapPromises, map(write), assemble);
+  const go = composeP(unwrapPromises, map(write), assemble);
 
   const results = await go(jobs);
 
+  const inputPath = compose(
+    prependInput,
+    stripPath(outputRgxp, mdSuffixRgxp));
+
+  const sklPath = compose(
+    s => s + sklSuffix,
+    inputPath);
+
+  const xlfPath = compose(
+    s => s + xlfSuffix,
+    inputPath);
+
+  const failedSkl = compose(
+    map(sklPath),
+    flattenResults,
+    failures);
+
+  const failedXlf = compose(
+    map(xlfPath),
+    flattenResults,
+    failures);
+
+  const failedInput = compose(flatten, zip);
+
+  const logPath = path.join(output, logname);
+  const logFailures = logger(logPath);
+
   console.info('composition done');
-  console.info('successes:', successes(results));
-  console.info('failures:', failures(results));
+  console.info('successes:', length(successes(results)));
+  console.info('failures:', length(failures(results)));
+
+  if (length(failures(results))) {
+    const [xlf, skl] = [failedXlf(results), failedSkl(results)];
+
+    await logFailures(failedInput(xlf, skl));
+
+    console.info('logged failures into:', logPath);
+
+    return ;
+  }
+
+  await writeTo(logPath, '');
 }
 
 module.exports = {
