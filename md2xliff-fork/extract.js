@@ -7,6 +7,7 @@ const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
 const {
+  match,
   endsWith,
   take,
   takeLast,
@@ -183,6 +184,9 @@ const extractMeta = meta => {
 }
 
 const preprocess = compose(
+  // wrap yaml values with variables in the single quotes '
+  // preventing yaml parser from failing
+  replace(/(?<![:-])([:-]\s)((?:\{\{).+(?=\n))/g, '$1\'$2\''),
   // include, code, if, for directives
   replace(/\{%\s(include|code|if|else|endif|for|endfor)\s[^\{]*%\}/g, '\n'),
   // inline LaTex directives
