@@ -354,13 +354,13 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
     const propLens = prop => obj => obj[prop];
 
     function handleHTML(token) {
-      const tree = parseFragment(token.content);
-
       const istext = compose(equals('#text'), propLens('nodeName'));
+
+      const iscomment = compose(equals('#comment'), propLens('nodeName'));
 
       const isimg = compose(equals('img'), propLens('nodeName'));
 
-      const filters = anyPass([istext, isimg]);
+      const filters = anyPass([istext, isimg, iscomment]);
 
       const imageLens = compose(
         propLens('value'),
@@ -371,7 +371,9 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         ? propLens('value')(node)
         : isimg(node)
           ? imageLens(node)
-          : "";
+          : iscomment(node)
+            ? propLens('data')(node)
+            : '';
 
       const liftText = compose(
         filter(Boolean),
