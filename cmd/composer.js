@@ -18,6 +18,7 @@ const {
 const reconstruct = require('../md2xliff-fork/xliff-reconstruct');
 
 const {
+  DEBUG,
   logname,
   mdSuffixRgxp,
   sklSuffixRgxp,
@@ -47,7 +48,17 @@ const sklStrings = composeP(unwrapPromises, map(readFile('utf8')), sklFilenames)
 const xlfStrings = composeP(unwrapPromises, map(readFile('utf8')), xlfFilenames);
 
 const generator = async ([xliff, skeleton, path, failed]) =>
-  reconstruct(xliff, skeleton, (ctx, generated) => [generated, path, !length(generated)]);
+  reconstruct(xliff, skeleton, (err, generated) => {
+    if (err && DEBUG) {
+      console.error(err);
+
+      return ['', path, true];
+    } else if (err) {
+      throw err;
+    }
+
+    return [generated, path, false];
+  });
 
 const assemble = composeP(unwrapPromises, map(generator), asyncify(transpose));
 
