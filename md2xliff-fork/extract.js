@@ -153,7 +153,7 @@ const textmap = (token) => {
 }
 
 const codemap = (token) => {
-  token.lang = token.info;
+  token.lang = trim(token.info);
   token.type = 'code';
 
   return token;
