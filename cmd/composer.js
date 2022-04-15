@@ -28,7 +28,6 @@ const {
   xlfSuffix,
   walk,
   readFile,
-  writeTo,
   logger,
   failed,
   failures,
@@ -147,11 +146,7 @@ const composer = async (input, output) => {
     await logFailures(failedInput(xlf, skl));
 
     console.info('logged failures into:', logPath);
-
-    return ;
   }
-
-  await writeTo(logPath, '');
 }
 
 module.exports = {

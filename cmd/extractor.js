@@ -30,7 +30,6 @@ const {
   flattenResults,
   walk,
   readFile,
-  writeTo,
   logger,
   failures,
   successes,
@@ -152,11 +151,7 @@ const extractor = async (input, output) => {
     await logFailures(failedInput(results));
 
     console.info('logged failures into:', logPath);
-
-    return; 
   }
-
-  await writeTo(logPath, '');
 }
 
 module.exports = {
