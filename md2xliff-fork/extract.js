@@ -7,6 +7,7 @@ const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
 const {
+  length,
   match,
   endsWith,
   take,
@@ -101,7 +102,11 @@ const ftype = ({ type }) =>
   type === 'link' ||
   type === 'image_basic' ||
   type === 'image' ||
-  type === 'html_block';
+  type === 'html_block' ||
+  type === 'code_inline';
+
+const skip = ({type}) =>
+  type === 'code_inline';
 
 const falpha = ({ content }) => Array.isArray(content)
   ? content.every(({content}) => falpha({content: content}))
@@ -183,6 +188,10 @@ const extractMeta = meta => {
     : extractor(meta);
 }
 
+const replaceAfter = (str, idx, src, replaceFn) =>
+  str.slice(0, idx) +
+  str.slice(idx).replace(src, replaceFn);
+
 const preprocess = compose(
   // wrap yaml values with variables in the single quotes '
   // preventing yaml parser from failing
@@ -246,22 +255,34 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
 
     const getTitleSegments = compose(map(getSegments), takeLast(1), findTitle);
 
-    // todo: consider pushing refs onto stack and process them in the end
-    function addUnit(text) { 
-        skeleton = skeleton.replace(text, (str, offset) =>
-          '%%%' + ++segmentCounter + '%%%'
-        );
+    function addUnit(text, token) {
+      if (token && skip(token)) {
+        const src = token.markup+token.content+token.markup;
+        const pos = skeleton.indexOf(src);
 
-        units.push({
-            id: segmentCounter,
-            source: {
-                lang: srcLang,
-                content: escape(text)
-            },
-            target: {
-                lang: trgLang
-            }
-        });
+        position = pos + length(src);
+
+        return ;
+      }
+
+      segmentCounter++;
+
+      skeleton = replaceAfter(skeleton, position, text, (str, offset) => {
+        // position += offset + length('%%%' + segmentCounter + '%%%');
+
+        return '%%%' + segmentCounter + '%%%';
+      });
+
+      units.push({
+        id: segmentCounter,
+          source: {
+            lang: srcLang,
+            content: escape(text)
+          },
+          target: {
+            lang: trgLang
+          }
+      });
     }
 
     const onBasicImage = (token) => {
@@ -405,6 +426,7 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         if (type === 'table') return onTable(token);
         if (typeof text === 'undefined') return;
         if (type === 'code') return handleCode(text, token.lang);
+        if (type === 'code_inline') return addUnit(text, token);
         // NOTE: isHtml(text) fails when there's `<script>` in text
 
         getSegments(text);
