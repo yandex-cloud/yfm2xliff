@@ -1,41 +1,53 @@
-## Описание
+# yfm2xliff
+helps you translate your [yfm](https://ydocs.tech/en/) files.
 
-Здесь лежит два скопированных репозитория: yfm-transform и md2xliff
+## installation
+```bash
+git clone git@github.com:yandex-cloud/yfm2xliff.git yfm2xliff
+cd yfm2xliff
+npm install
+npm link
+```
 
-Добавлено:
+## usage
+supports:
+  * extraction of the text tokens from markup to the xliff format.
+  * their composition in the translated markup document.
 
-1. Поддержка кастомного lexer в md2xliff | Поиск по коду - `ADDED: support custom lexer`
-1. Лексер в yfm-transform, сейчас возвращает только текстовые узлы | Поиск по коду - `ADDED: support lexer function`
+### environment variables
+supported by all commands
 
-Cейчас lexer отдает только текстовые узлы, md2xliff ищет в файле текст узлов и меняет на хеш. 
-Нужно расширить lexer, добавив узлы code
+* `DEBUG` - enables failures logging to the filesystem
+            `output_dir/.yfm2xliff.failures.log`.
+            continues to `extract/compose` even if some failures occured in the process.
 
-## Что не работает
- 
-1. Не переводятся блоки кода
-1. Не переводятся текст табов
+### commands
+* extract
+* compose
 
-## Шаги запуска
+#### extract
+extract text tokens for translation from all of the markup files inside the given directory into xliff.
 
-Устанавливаем зависимости скопированных репозиориев: `npm run deps:install`
+##### options
+* -i/input - input directory to get markup files from
+* -o/output - output directory to persist extracted tokens in the xliff format (preserves original file path)
 
-В директории `mock` лежат тестовые данные с синтаксисом плагинов.
+##### example
+```bash
+yfm2xliff extract -i cloud-docs/ru -o cloud-docs-extracted
+```
 
-Чтобы добавить новый плагин:
-1. Создайте в `mock` директорию c именем плагина
-1. Добавьте имя директории в `constants.js`
-1. В директории с именем плагина создайте `test.md`
+#### compose
+compose translated text units from all of the xliff files inside the given directory into translated markup.
 
-### expose
+##### environment variables
+* `USE_SOURCE` - uses originally extracted text tokens instead of the translated ones, thus giving you original non translated markup.
 
-При запуске `node extract.js` в директории с плагинами появится `xlf` и `skl` файлы.
-В `skl` файле можно убедиться, что весь текст заменен на хеши
-В `xlf` файле можно перевести текст, добавив перевод в таргет тег.
+##### options
+* -i/input - input directory to get translated units from xliff files.
+* -o/output - output directory to persist translated markup (preserves original file path)
 
-### pretranslate
-
-Если есть API ключ Yandex.Traslator, то укажите его в переменной TRANSLATOR_API_KEY.
-
-### reconstruct
-
-После перевода xlf, склейте кусочки командой `node reconstruct.js`
+##### example
+```
+yfm2xliff compose -i cloud-docs-extracted -o cloud-docs-translated
+```
