@@ -1,6 +1,7 @@
 const {promises: { readdir, readFile, writeFile }, readdirSync, readFileSync} = require('fs');
 const {join} = require('path');
 const {compose} = require('ramda');
+const composeP = require('@ramda/composep');
 
 const {visible} = require('utils.js');
 const lexer = require('yfm-transform-fork/lexer.js');
@@ -53,8 +54,8 @@ function data(name) {
 function xliff(data) {
   const {name, input, path: {input: {md, skl}}, expected: {xlf}} = data;
 
-  test(`${name} xliff`, () => {
-    const {xliff} = extract(input, md, skl, null, null, {lexer});
+  test(`${name} xliff`, async () => {
+    const {xliff} = await extract(input, md, skl, null, null, {lexer});
 
     expect(xliff).toBe(xlf);
   });
@@ -65,8 +66,8 @@ function xliff(data) {
 function skeleton(data) {
   const {name, input, path: {input: {md, skl}}, expected} = data;
 
-  test(`${name} skeleton`, () => {
-    const {skeleton} = extract(input, md, skl, null, null, {lexer});
+  test(`${name} skeleton`, async () => {
+    const {skeleton} = await extract(input, md, skl, null, null, {lexer});
 
     expect(skeleton).toBe(expected.skl);
   });

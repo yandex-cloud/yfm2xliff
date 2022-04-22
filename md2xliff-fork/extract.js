@@ -1,4 +1,7 @@
+const composeP = require('@ramda/composep');
+const {asyncify, unwrapPromises} = require('../cmd/common');
 const escape = require('escape-html');
+const path = require('path');
 const isHtml = require('is-html');
 const {parseFragment} = require('parse5');
 const {highlight, highlightAuto} = require('highlight.js');
@@ -7,6 +10,9 @@ const postcss = require('postcss');
 const extractComments = require('esprima-extract-comments');
 const hideErrors = process.env.HIDE_ERRORS;
 const {
+  not,
+  ifElse,
+  identity,
   length,
   match,
   endsWith,
@@ -213,14 +219,34 @@ const normalize = compose(
   replace(/\t/g, '    '),
   replace(/\r?\n|\r/g, '\n'));
 
-function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
+const splitLines = split(/[\n\r]/);
+
+const sentenize = async (paragraph) => {
+  const {spawn} = require('child_process');
+  const filepath = path.join(__dirname, '..', 'sentenize.py');
+
+  const script = spawn('python3', [filepath, paragraph]);
+  const data = [];
+
+
+  return new Promise(function (res, rej) {
+    script.stdout.on('data', datum => data.push(datum));
+    script.stdout.on('end', datum => {
+      res(splitLines(Buffer.concat(data).toString('utf8')))
+      script.kill();
+    });
+  });
+}
+
+async function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, options) {
     const tokenize = compose(options.lexer(options), preprocess, normalize);
 
     let skeleton = normalize(md);
-    let links = {};
     let units = [];
     let segmentCounter = 0;
     let position = 0;
+
+    const skipmap = {};
 
     let {tokens, meta} = tokenize(md);
 
@@ -235,18 +261,20 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
     srcLang || (srcLang = 'ru-RU');
     trgLang || (trgLang = 'en-US');
 
-    const splitLines = split(/[\n\r]/);
-
     const splitSentences = split(/([^\.!\?\\]+[\.!\?]+(?=\s*[A-ZА-ЯЁ]+))/);
 
-    const getSentences = compose(
-        map(trim),
-        flatten,
-        map(filter(Boolean)),
-        map(splitSentences),
-        splitLines);
+    const pending = [];
 
-    const getSegments = compose(map(addUnit), getSentences);
+    const getSegments = text => pending.push(text);
+
+    const _getSegments = map(ifElse(is(String), composeP(
+      map(trim),
+      filter(Boolean),
+      flatten,
+      unwrapPromises,
+      map(sentenize),
+      // map(asyncify(splitSentences)),
+      asyncify(splitLines)), identity));
 
     const findTitle = compose(v => v ?? [], find(compose(
       endsWith([true]),
@@ -256,11 +284,19 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
     const getTitleSegments = compose(map(getSegments), takeLast(1), findTitle);
 
     function addUnit(text, token) {
-      if (token && skip(token)) {
-        const src = token.markup+token.content+token.markup;
-        const pos = skeleton.indexOf(src);
+      if (not(is(String)(text))) {
+        console.log(skipmap[text]);
+        if (skipmap[text] < 0)
+          return ;
 
-        position = pos + length(src);
+        const lookat = skeleton.slice(position);
+
+        const src = text.markup+text.content+text.markup;
+        const pos = lookat.indexOf(src);
+
+        position += pos + length(src);
+
+        skipmap[text]--;
 
         return ;
       }
@@ -426,13 +462,20 @@ function extract(md, markdownFileName, skeletonFilename, srcLang, trgLang, optio
         if (type === 'table') return onTable(token);
         if (typeof text === 'undefined') return;
         if (type === 'code') return handleCode(text, token.lang);
-        if (type === 'code_inline') return addUnit(text, token);
-        // NOTE: isHtml(text) fails when there's `<script>` in text
+        if (type === 'code_inline') {
+          skipmap[token] = skipmap[token] ? skipmap[token] + 1 : 1;
+
+          return pending.push(token);
+        }
 
         getSegments(text);
     }
 
     tokens.forEach(handleToken);
+
+    const _units = await Promise.all(_getSegments(pending));
+
+    map(addUnit, flatten(_units));
 
     var data = {
         markdownFileName: markdownFileName,

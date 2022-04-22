@@ -59,7 +59,7 @@ const xliff = async ([input, md, skl, xlf, failed]) => {
 
   const wrapped = tryCatch(extract, errorHandler);
 
-  const {xliff, skeleton} = wrapped(input, md, skl, null, null, {lexer});
+  const {xliff, skeleton} = await wrapped(input, md, skl, null, null, {lexer});
 
   return [xliff, skeleton, xlf, skl, !length(xliff)];
 }
