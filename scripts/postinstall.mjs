@@ -1,27 +1,36 @@
 import {promises} from 'fs';
 import {join} from 'path';
 import {render} from './template.js';
-import {visible} from '../utils.js';
+import {fileVisible} from '../common/filters.js';
+import {promiseAll, composeP} from '../common/promises.js';
+import {zip, curry, filter, map, compose, flip} from 'ramda';
 
 const {readdir, readFile, writeFile} = promises;
 
-const EXPECTED_DIRNAME = 'expected';
+const {cwd} = process;
+const inputPath = join(cwd(), '__tests__/extract/data/input');
+const expectedPath = join(cwd(), '__tests__/extract/data/expected');
 
 console.info('bootstrapping mock data...');
 
-const CWD = process.cwd();
+const templateFilepath = (name) => join(expectedPath, name, `${name}.xlf.template`);
+const replacedFilepath = (name) => join(expectedPath, name, `${name}.xlf`);
 
-const expectedpath = join(CWD, EXPECTED_DIRNAME);
+const renderer = curry(flip(render))({input: inputPath});
+const reader = flip(readFile)('utf8');
+const writer = compose(
+    ([content, path]) => writeFile(path, content),
+    ([content, name]) => [content, replacedFilepath(name)],
+);
 
-const expectedlist = (await readdir(expectedpath)).filter(visible);
+const folders = composeP(filter(fileVisible), readdir);
+const templates = composeP(promiseAll, map(reader), map(templateFilepath), folders);
+const expected = composeP(map(renderer), templates);
 
-const templates = await Promise.all(
-  expectedlist.map(name =>
-    readFile(join(expectedpath, name, `${name}.xlf.template`), 'utf8')));
+const [replaced, names] = await Promise.all([expected(expectedPath), folders(expectedPath)]);
 
-const replaced = templates.map(template => render(template, {root: CWD}));
+const go = composeP(promiseAll, map(writer), zip);
 
-await Promise.all(expectedlist.map((name, i) =>
-  writeFile(join(expectedpath, name, `${name}.xlf`), replaced[i])));
+await go(replaced, names);
 
 console.info('mock data ready');
