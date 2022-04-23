@@ -1,99 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="{{root}}/mock/base/base.md"
+  <file original="{{input}}/additional-features/additional-features.md"
     source-language="ru-RU" target-language="en-US" datatype="markdown">
     <header>
       <skl>
-        <external-file href="{{root}}/mock/base/base.skl.md"/>
+        <external-file href="{{input}}/additional-features/additional-features.skl.md"/>
       </skl>
     </header>
     <body>
       <trans-unit id="1">
-        <source xml:lang="ru-RU">Верхний\^регистр^</source>
+        <source xml:lang="ru-RU">Дополнительные возможности</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="2">
-        <source xml:lang="ru-RU">раз\?два</source>
+        <source xml:lang="ru-RU">Нижний регистр</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="3">
-        <source xml:lang="ru-RU">ага, т. е. ты имел ввиду это?</source>
+        <source xml:lang="ru-RU">Химическая формула воды H</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="4">
-        <source xml:lang="ru-RU">Предложение один.</source>
+        <source xml:lang="ru-RU">O, означает что каждая молекула хранит в себе один оксиген и два гидроген атома.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="5">
-        <source xml:lang="ru-RU">Предложение два?</source>
+        <source xml:lang="ru-RU">Предложение обычный</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="6">
-        <source xml:lang="ru-RU">Предложение три!</source>
+        <source xml:lang="ru-RU">нижний</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="7">
-        <source xml:lang="ru-RU">Предложение четыре.</source>
+        <source xml:lang="ru-RU">обычный регистр, продолжение предложения.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="8">
-        <source xml:lang="ru-RU">Полужирный текст</source>
+        <source xml:lang="ru-RU">Подчеркнутый текст</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="9">
-        <source xml:lang="ru-RU">Курсив</source>
+        <source xml:lang="ru-RU">Предложение с</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="10">
-        <source xml:lang="ru-RU">Полужирный курсив</source>
+        <source xml:lang="ru-RU">подчеркнутым</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="11">
-        <source xml:lang="ru-RU">Тоже полужирный курсив</source>
+        <source xml:lang="ru-RU">текстом.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="12">
-        <source xml:lang="ru-RU">Зачеркнутый текст</source>
+        <source xml:lang="ru-RU">Сноски</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="13">
-        <source xml:lang="ru-RU">Верхний</source>
+        <source xml:lang="ru-RU">Короткая сноска</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="14">
-        <source xml:lang="ru-RU">регистр</source>
+        <source xml:lang="ru-RU">с последующей длинной сноской.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="15">
-        <source xml:lang="ru-RU">Моноширинный текст</source>
+        <source xml:lang="ru-RU">Списки задач</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="16">
-        <source xml:lang="ru-RU">Заголовок h1</source>
+        <source xml:lang="ru-RU">Пресс релиз</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="17">
-        <source xml:lang="ru-RU">Заголовок h2</source>
+        <source xml:lang="ru-RU">Обновить сайт</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="18">
-        <source xml:lang="ru-RU">Заголовок h3</source>
+        <source xml:lang="ru-RU">Написать газетам</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="19">
-        <source xml:lang="ru-RU">Заголовок h4</source>
+        <source xml:lang="ru-RU">Первая сноска.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="20">
-        <source xml:lang="ru-RU">Цитирование</source>
+        <source xml:lang="ru-RU">Длинная сноска в несколько параграфов.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="21">
-        <source xml:lang="ru-RU">Цитирование</source>
+        <source xml:lang="ru-RU">Используйте сноски, если необходимо указать дополнительную информацию, не усложняя текст.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="22">
-        <source xml:lang="ru-RU">Вложенное цитирование</source>
+        <source xml:lang="ru-RU">Сноски состоят из двух частей, связанных метками:</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
     </body>

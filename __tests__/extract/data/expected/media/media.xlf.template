@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="{{root}}/mock/media/media.md"
+  <file original="{{input}}/media/media.md"
     source-language="ru-RU" target-language="en-US" datatype="markdown">
     <header>
       <skl>
-        <external-file href="{{root}}/mock/media/media.skl.md"/>
+        <external-file href="{{input}}/media/media.skl.md"/>
       </skl>
     </header>
     <body>

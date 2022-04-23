@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="{{root}}/mock/cut/cut.md"
+  <file original="{{input}}/cut/cut.md"
     source-language="ru-RU" target-language="en-US" datatype="markdown">
     <header>
       <skl>
-        <external-file href="{{root}}/mock/cut/cut.skl.md"/>
+        <external-file href="{{input}}/cut/cut.skl.md"/>
       </skl>
     </header>
     <body>
