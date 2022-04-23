@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file original="{{root}}/mock/tables-multiline/tables-multiline.md"
+  <file original="{{input}}/tables-multiline/tables-multiline.md"
     source-language="ru-RU" target-language="en-US" datatype="markdown">
     <header>
       <skl>
-        <external-file href="{{root}}/mock/tables-multiline/tables-multiline.skl.md"/>
+        <external-file href="{{input}}/tables-multiline/tables-multiline.skl.md"/>
       </skl>
     </header>
     <body>
