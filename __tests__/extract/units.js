@@ -4,7 +4,7 @@ const {compose, map, filter} = require('ramda');
 
 const {fileVisible} = require('../../common/filters.js');
 const lexer = require('yfm-transform-fork/lexer.js');
-const extract = require('md2xliff-fork/extract.js');
+const {extract} = require('extractor');
 
 const {cwd} = process;
 
@@ -60,8 +60,15 @@ function getXliff(data) {
         expected: {xlf},
     } = data;
 
-    test(`${name} xliff`, () => {
-        const {xliff} = extract(input, md, skl, null, null, {lexer});
+    test(`${name} xliff`, async () => {
+        const params = {
+            lexer,
+            md: input,
+            mdPath: md,
+            sklPath: skl,
+        };
+
+        const {xliff} = await extract(params);
 
         expect(xliff).toBe(xlf);
     });
@@ -79,8 +86,15 @@ function getSkeleton(data) {
         expected,
     } = data;
 
-    test(`${name} skeleton`, () => {
-        const {skeleton} = extract(input, md, skl, null, null, {lexer});
+    test(`${name} skeleton`, async () => {
+        const params = {
+            lexer,
+            md: input,
+            mdPath: md,
+            sklPath: skl,
+        };
+
+        const {skeleton} = await extract(params);
 
         expect(skeleton).toBe(expected.skl);
     });

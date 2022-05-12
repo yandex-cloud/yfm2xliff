@@ -104,9 +104,7 @@ function notes(md, {lang, path: optPath, log}) {
 
                 i++;
             } else if (matchWrongNotes(tokens, i) && tokens[i + 1].content !== '{% endnote %}') {
-                log.warn(
-                    `Incorrect syntax for notes${path ? `, file ${bold(path)}` : ''}`,
-                );
+                log.warn(`Incorrect syntax for notes${path ? `, file ${bold(path)}` : ''}`);
 
                 i += 3;
             } else {

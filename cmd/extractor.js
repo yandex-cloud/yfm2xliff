@@ -17,7 +17,7 @@ const {
     tryCatch,
 } = require('ramda');
 
-const extract = require('../md2xliff-fork/extract');
+const {extract} = require('../extractor');
 const lexer = require('../yfm-transform-fork/lexer');
 
 const {
@@ -59,7 +59,14 @@ const xliff = async ([input, md, skl, xlf]) => {
 
     const wrapped = tryCatch(extract, errorHandler);
 
-    const {xliff, skeleton} = wrapped(input, md, skl, null, null, {lexer});
+    const params = {
+        lexer,
+        sklPath: skl,
+        mdPath: md,
+        md: input,
+    };
+
+    const {xliff, skeleton} = await wrapped(params);
 
     return [xliff, skeleton, xlf, skl, !length(xliff)];
 };

@@ -293,42 +293,46 @@
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="72">
-        <source xml:lang="ru-RU">Это заметка со своим заголовком.</source>
+        <source xml:lang="ru-RU">собственный заголовок заметки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="73">
-        <source xml:lang="ru-RU">Это заметка без заголовка.</source>
+        <source xml:lang="ru-RU">Это заметка со своим заголовком.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="74">
-        <source xml:lang="ru-RU">медиа</source>
+        <source xml:lang="ru-RU">Это заметка без заголовка.</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="75">
-        <source xml:lang="ru-RU">alt-текст</source>
+        <source xml:lang="ru-RU">медиа</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="76">
-        <source xml:lang="ru-RU">текст_подсказки</source>
+        <source xml:lang="ru-RU">alt-текст</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="77">
-        <source xml:lang="ru-RU">Альт-текст картинки внутри ссылки</source>
+        <source xml:lang="ru-RU">текст_подсказки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="78">
-        <source xml:lang="ru-RU">подсказка картинки внутри ссылки</source>
+        <source xml:lang="ru-RU">Альт-текст картинки внутри ссылки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="79">
-        <source xml:lang="ru-RU">Альт-текст реф картинки</source>
+        <source xml:lang="ru-RU">подсказка картинки внутри ссылки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="80">
-        <source xml:lang="ru-RU">подсказка реф картинки</source>
+        <source xml:lang="ru-RU">Альт-текст реф картинки</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
       <trans-unit id="81">
+        <source xml:lang="ru-RU">подсказка реф картинки</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
+      <trans-unit id="82">
         <source xml:lang="ru-RU">название_видеохостинга</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
