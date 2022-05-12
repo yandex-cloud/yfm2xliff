@@ -25,15 +25,40 @@ const video = require('./plugins/video');
 const monospace = require('./plugins/monospace');
 const yfmTable = require('./plugins/table');
 const escape = require('./plugins/escape');
+const imsize = require('./plugins/imsize');
 
 // ADDED: support lexer function
 function lexer(opts, originInput) {
     const {
-        vars = {}, path, extractTitle: extractTitleOption,
-        allowHTML = true, linkify = false, breaks = true, conditionsInCode = false, disableLiquid = true,
-        leftDelimiter = '{', rightDelimiter = '}',
+        vars = {},
+        path,
+        extractTitle: extractTitleOption,
+        allowHTML = true,
+        linkify = false,
+        breaks = true,
+        conditionsInCode = false,
+        disableLiquid = true,
+        leftDelimiter = '{',
+        rightDelimiter = '}',
         isLiquided = false,
-        plugins = [meta, deflist, cut, notes, anchors, tabs, code, sup, video, monospace, yfmTable, sub, ins, foot, todo],
+        plugins = [
+            meta,
+            deflist,
+            cut,
+            notes,
+            anchors,
+            tabs,
+            code,
+            sup,
+            video,
+            monospace,
+            yfmTable,
+            imsize,
+            sub,
+            ins,
+            foot,
+            todo,
+        ],
         highlightLangs = {},
         ...customOptions
     } = opts ?? {};
@@ -47,13 +72,14 @@ function lexer(opts, originInput) {
         log,
     };
 
-    const input = disableLiquid || isLiquided
-        ? originInput
-        : liquid(originInput, vars, path, {conditionsInCode});
+    const input =
+        disableLiquid || isLiquided
+            ? originInput
+            : liquid(originInput, vars, path, {conditionsInCode});
 
     const highlight = makeHighlight(highlightLangs);
 
-    const md = new MarkdownIt({html: allowHTML, linkify, highlight, breaks}); 
+    const md = new MarkdownIt({html: allowHTML, linkify, highlight, breaks});
     // Need for ids of headers
     md.use(attrs, {leftDelimiter, rightDelimiter});
 
@@ -69,10 +95,9 @@ function lexer(opts, originInput) {
         const env = {};
 
         return {
-          tokens: md.parse(input, env),
-          meta: md.meta,
+            markup: md.parse(input, env),
+            meta: md.meta,
         };
-
     } catch (err) {
         log.error(`Error occurred${path ? ` in ${bold(path)}` : ''}`);
         throw err;

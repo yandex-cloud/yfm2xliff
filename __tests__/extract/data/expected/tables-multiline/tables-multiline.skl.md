@@ -75,37 +75,42 @@ _**%%%31%%%**_
 %%%68%%%
 
 {% endnote %}
+
 {% note tip %}
 
 %%%69%%%
 
 {% endnote %}
+
 {% note warning %}
 
 %%%70%%%
 
 {% endnote %}
+
 {% note alert %}
 
 %%%71%%%
 
 {% endnote %}
-{% note info "собственный заголовок заметки" %}
 
-%%%72%%%
-
-{% endnote %}
-{% note info "" %}
+{% note info "%%%72%%%" %}
 
 %%%73%%%
 
+{% endnote %}
+
+{% note info "" %}
+
+%%%74%%%
+
 {% endnote %} ||
-|| %%%74%%% |
-![%%%75%%%](_images/image.png "%%%76%%%" =100x100)
-[![%%%77%%%](../../_images/mountain.jpg "%%%78%%%" =100x200)](https://yandex.com/images/search?text=mountain)
-![%%%79%%%][image1]
-@[%%%81%%%](video_id) ||
+|| %%%75%%% |
+![%%%76%%%](_images/image.png "%%%77%%%" =100x100)
+[![%%%78%%%](../../_images/mountain.jpg "%%%79%%%" =100x200)](https://yandex.com/images/search?text=mountain)
+![%%%80%%%][image1]
+@[%%%82%%%](video_id) ||
 |#
 
 [1]: https://yandex.com/ "%%%48%%%"
-[image1]: ../../_images/mountain.jpg "%%%80%%%"
+[image1]: ../../_images/mountain.jpg "%%%81%%%"
