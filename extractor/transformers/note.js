@@ -1,5 +1,5 @@
-/* eslint-disable no-return-assign */
-const {map, equals, cond, always, compose, identity} = require('ramda');
+/* eslint-disable no-return-assign, no-shadow */
+const {map, equals, cond, always, compose, identity, invoker, tap} = require('ramda');
 const {notNil} = require('../../common/predicates');
 const {
     token: {typeLens},
@@ -18,12 +18,19 @@ const open = (token) => (noteTitle = title(token)) && null;
 
 const inside = (token) => noteTitle.children.push(token) && null;
 
+const attrGet = invoker(1, 'attrGet');
+
 const close = () => {
-    const merged = noteTitle.explicit ? noteTitle : null;
+    const effect = tap(() => (noteTitle = null));
 
-    noteTitle = null;
+    const title = cond([
+        [attrGet('yfm2xliff-explicit'), identity],
+        [always(true), always(null)],
+    ]);
 
-    return merged;
+    const go = compose(effect, title);
+
+    return go(noteTitle);
 };
 
 const transform = cond([
