@@ -3,8 +3,47 @@ const {join} = require('path');
 const {compose, map, filter} = require('ramda');
 
 const {fileVisible} = require('../../common/filters.js');
-const lexer = require('yfm-transform-fork/lexer.js');
 const {extract} = require('extractor');
+const {hcl} = require('../../vendor/hcl');
+
+// base plugins
+const meta = require('@doc-tools/transform/lib/plugins/meta');
+const deflist = require('@doc-tools/transform/lib/plugins/deflist');
+const cut = require('@doc-tools/transform/lib/plugins/cut');
+const notes = require('@doc-tools/transform/lib/plugins/notes');
+const anchors = require('@doc-tools/transform/lib/plugins/anchors');
+const tabs = require('@doc-tools/transform/lib/plugins/tabs');
+const code = require('@doc-tools/transform/lib/plugins/code');
+const imsize = require('@doc-tools/transform/lib/plugins/imsize');
+const sup = require('@doc-tools/transform/lib/plugins/sup');
+const video = require('@doc-tools/transform/lib/plugins/video');
+const monospace = require('@doc-tools/transform/lib/plugins/monospace');
+const table = require('@doc-tools/transform/lib/plugins/table');
+
+// extra plugins
+const sub = require('markdown-it-sub');
+const ins = require('markdown-it-ins');
+const foot = require('markdown-it-footnote');
+const checkbox = require('markdown-it-checkbox');
+
+const plugins = [
+    meta,
+    deflist,
+    cut,
+    notes,
+    anchors,
+    tabs,
+    code,
+    sup,
+    video,
+    monospace,
+    table,
+    imsize,
+    sub,
+    ins,
+    foot,
+    checkbox,
+];
 
 const {cwd} = process;
 
@@ -62,7 +101,12 @@ function getXliff(data) {
 
     test(`${name} xliff`, async () => {
         const params = {
-            lexer,
+            options: {
+                plugins,
+                highlightLangs: {
+                    hcl,
+                },
+            },
             md: input,
             mdPath: md,
             sklPath: skl,
@@ -88,7 +132,13 @@ function getSkeleton(data) {
 
     test(`${name} skeleton`, async () => {
         const params = {
-            lexer,
+            options: {
+                plugins,
+                highlightLangs: {
+                    hcl,
+                },
+            },
+            md: input,
             md: input,
             mdPath: md,
             sklPath: skl,

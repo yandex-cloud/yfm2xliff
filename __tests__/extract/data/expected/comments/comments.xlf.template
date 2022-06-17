@@ -196,6 +196,10 @@
         <source xml:lang="ru-RU">fat arrow syntax</source>
         <target xml:lang="en-US"></target>
       </trans-unit>
+      <trans-unit id="48">
+        <source xml:lang="ru-RU">comment inside terraform language</source>
+        <target xml:lang="en-US"></target>
+      </trans-unit>
     </body>
  </file>
 </xliff>

@@ -9,6 +9,13 @@ npm install
 npm link
 ```
 
+## dependencies
+library has peer dependency `@doc-tools/transform`
+
+```
+npm install @doc-tools/transform
+```
+
 ## usage
 supports:
   * extraction of the text tokens from markup to the xliff format.
