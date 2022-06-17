@@ -1,5 +1,7 @@
 /* eslint-disable handle-callback-err, new-cap  */
 const {
+    apply,
+    toPairs,
     chain,
     join,
     prop,
@@ -14,8 +16,7 @@ const {
     equals,
     always,
 } = require('ramda');
-const {highlight, highlightAuto} = require('highlight.js');
-
+const highlighter = require('highlight.js');
 const {lift} = require('../../common/transformers');
 const {notEmpty} = require('../../common/predicates');
 const {
@@ -25,6 +26,10 @@ const {
 } = require('../tokens');
 const {splitLines, stripPunct} = require('../common');
 const {commentBody} = require('./comment');
+
+const {highlight, highlightAuto} = highlighter;
+
+const registerLanguages = compose(map(apply(highlighter.registerLanguage)), toPairs);
 
 const isMarkdown = compose(equals('markdown'), langLens);
 
@@ -75,9 +80,13 @@ const parseComments = (token) => {
 
 const other = compose(chain(stripPunct), chain(splitLines), liftComments, parseComments);
 
-const fence = cond([
-    [isMarkdown, markdown],
-    [always(true), other],
-]);
+const fence = (languages) => {
+    registerLanguages(languages ?? {});
+
+    return cond([
+        [isMarkdown, markdown],
+        [always(true), other],
+    ]);
+};
 
 module.exports = {fence};

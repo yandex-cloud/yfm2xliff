@@ -5,7 +5,7 @@
   "homepage": "https://github.com/yandex-cloud/yfm2xliff",
   "description": "yfm2xliff - extracts text to xliff, translates, and composes your yfm documentation",
   "scripts": {
-    "preinstall": "cd md2xliff-fork && npm i && cd ../yfm-transform-fork  && npm i && cd ..",
+    "preinstall": "cd md2xliff-fork && npm i && cd ..",
     "postinstall": "node scripts/postinstall.mjs",
     "test": "jest"
   },
@@ -17,6 +17,11 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@doc-tools/transform": ">=2.7.1",
+    "markdown-it-checkbox": "^1.1.0",
+    "markdown-it-footnote": "^3.0.3",
+    "markdown-it-ins": "^3.0.1",
+    "markdown-it-sub": "^1.0.0",
     "@yandex-cloud/eslint-config": "^1.0.1",
     "@yandex-cloud/prettier-config": "^1.0.0",
     "eslint": "^8.14.0",
@@ -25,10 +30,15 @@
   },
   "dependencies": {
     "@ramda/composep": "^0.26.1",
+    "chalk": "^4.1.0",
     "escape-html": "^1.0.3",
     "highlight.js": "^11.5.0",
+    "markdown-it-attrs": "^4.1.4",
     "parse5": "^6.0.1",
     "ramda": "^0.28.0",
     "yargs": "^17.4.0"
+  },
+  "peerDependencies": {
+    "@doc-tools/transform": ">=2.7.1"
   }
 }

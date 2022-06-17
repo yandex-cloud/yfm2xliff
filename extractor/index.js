@@ -1,20 +1,20 @@
+/* eslint-disable no-shadow */
 const {map, compose, modify, allPass, has, both, all, ifElse, values} = require('ramda');
 
 const xliffSerialize = require('../md2xliff-fork/xliff-serialize.js');
 const {notNil} = require('../common/predicates');
 const {preprocess, normalize} = require('./preprocessor');
 const transformers = require('./transformers');
-const {segments} = require('./segmenter');
+const {segmenter} = require('./segmenter');
 const {sentences} = require('./sentenizer');
+const {lexer} = require('./lexer');
 const generator = require('./generator');
 
-const argNames = ['md', 'mdPath', 'sklPath', 'lexer'];
+const argNames = ['md', 'mdPath', 'sklPath'];
 
 const paramsValid = both(allPass(map(has, argNames)), compose(all(notNil), values));
 
 const implicitArgs = (args) => ({source: 'ru-RU', target: 'en-US', md: '', options: {}, ...args});
-
-const tokenize = (lexer, options) => lexer(options);
 
 const merge = ({meta, markup}) => [...meta, ...markup];
 
@@ -25,13 +25,15 @@ const transform = compose(
 );
 
 const extract = async (args) => {
-    const {md, mdPath, sklPath, source, target, lexer, options} = implicitArgs(args);
+    const {md, mdPath, sklPath, source, target, options} = implicitArgs(args);
 
     const units = generator.units({source: {lang: source}, target: {lang: target}});
 
     const skeleton = compose(generator.skeleton, normalize);
 
-    const pipeline = compose(sentences, segments, transform, tokenize(lexer, options), preprocess);
+    const segments = segmenter({highlight: options.highlightLangs});
+
+    const pipeline = compose(sentences, segments, transform, lexer(options), preprocess);
 
     const sentences_ = pipeline(md);
 

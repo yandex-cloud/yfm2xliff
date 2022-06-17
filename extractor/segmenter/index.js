@@ -35,11 +35,7 @@ const isTitle = compose(equals('title'), view(firstLens));
 
 const findTitle = compose(defaultTo([]), find(isTitle));
 
-const children = compose(map(handler), childrenLens);
-
 const title = compose(defaultTo(''), view(secondLens), findTitle, attrsLens);
-
-const childrenTitle = compose(flatten, juxt([children, title]));
 
 const other = compose(
     tap((type) => {
@@ -48,23 +44,27 @@ const other = compose(
     typeLens,
 );
 
-function handler(token) {
-    return cond([
-        [isCodeInline, codeInline],
-        [isLink, childrenTitle],
-        [isImage, childrenTitle],
-        [isFence, fence],
-        [isComment, comment],
-        [isText, contentLens],
-        [isHTML, html],
-        [always(true), other],
-    ])(token);
-}
+const segmenter = ({highlight}) => {
+    const children = compose(map(handler), childrenLens);
 
-const filters = filter(notEmpty);
+    const childrenTitle = compose(flatten, juxt([children, title]));
 
-const segments = compose(filters, chain(handler));
+    function handler(token) {
+        return cond([
+            [isCodeInline, codeInline],
+            [isLink, childrenTitle],
+            [isImage, childrenTitle],
+            [isFence, fence(highlight ?? {})],
+            [isComment, comment],
+            [isText, contentLens],
+            [isHTML, html],
+            [always(true), other],
+        ])(token);
+    }
 
-module.exports = {
-    segments,
+    const segments = compose(filter(notEmpty), chain(handler));
+
+    return segments;
 };
+
+module.exports = {segmenter};

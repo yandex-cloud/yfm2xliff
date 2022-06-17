@@ -285,3 +285,13 @@ module MyModule {
 declare magicNumber number;
 myArray.forEach(() => { }); // fat arrow syntax
 ```
+
+```hcl
+resource "aws_instance" "example" {
+  ami = "abc123"
+
+  network_interface {
+    # comment inside terraform language
+  }
+}
+```
