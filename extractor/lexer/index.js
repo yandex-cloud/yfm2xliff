@@ -1,28 +1,14 @@
 const {bold} = require('chalk');
 const MDParser = require('markdown-it');
-
-// base plugins
-const meta = require('@doc-tools/transform/lib/plugins/meta');
-const deflist = require('@doc-tools/transform/lib/plugins/deflist');
-const cut = require('@doc-tools/transform/lib/plugins/cut');
-const notes = require('@doc-tools/transform/lib/plugins/notes');
-const anchors = require('@doc-tools/transform/lib/plugins/anchors');
-const tabs = require('@doc-tools/transform/lib/plugins/tabs');
-const code = require('@doc-tools/transform/lib/plugins/code');
-const imsize = require('@doc-tools/transform/lib/plugins/imsize');
-const sup = require('@doc-tools/transform/lib/plugins/sup');
-const video = require('@doc-tools/transform/lib/plugins/video');
-const monospace = require('@doc-tools/transform/lib/plugins/monospace');
-const table = require('@doc-tools/transform/lib/plugins/table');
 const attrs = require('markdown-it-attrs');
 
-// custom plugins
 const escape = require('./plugins/escape');
 const log = require('./log');
+const {defaultPlugins, extraPlugins} = require('./constants');
 
 const lexer = (options) => (input) => {
     const {
-        path,
+        path = '',
         extractTitle: extractTitleOption,
         disableLiquid = true,
         allowHTML = true,
@@ -31,20 +17,7 @@ const lexer = (options) => (input) => {
         rightDelimiter = '}',
         breaks = true,
         vars = {},
-        plugins = [
-            meta,
-            deflist,
-            cut,
-            notes,
-            anchors,
-            tabs,
-            code,
-            imsize,
-            sup,
-            video,
-            monospace,
-            table,
-        ],
+        plugins = defaultPlugins,
         ...customOptions
     } = options ?? {};
 
@@ -76,5 +49,7 @@ const lexer = (options) => (input) => {
 };
 
 module.exports = {
-    lexer: lexer,
+    lexer,
+    defaultPlugins,
+    extraPlugins,
 };
