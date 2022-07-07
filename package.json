@@ -29,6 +29,7 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
+    "@doc-tools/sentenizer": "0.0.0",
     "@ramda/composep": "^0.26.1",
     "chalk": "^4.1.0",
     "escape-html": "^1.0.3",
