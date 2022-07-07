@@ -12,7 +12,9 @@ const monospace = require('@doc-tools/transform/lib/plugins/monospace');
 const table = require('@doc-tools/transform/lib/plugins/table');
 const images = require('@doc-tools/transform/lib/plugins/images');
 const includes = require('@doc-tools/transform/lib/plugins/includes');
-const links = require('@doc-tools/transform/lib/plugins/links');
+// todo: investigate appropriate plugin usage
+//       although resolving links are not really needed here >.<
+// const links = require('@doc-tools/transform/lib/plugins/links');
 
 const sub = require('markdown-it-sub');
 const ins = require('markdown-it-ins');
@@ -24,7 +26,7 @@ const defaultPlugins = [
     deflist,
     includes,
     cut,
-    links,
+    // links,
     images,
     notes,
     anchors,
