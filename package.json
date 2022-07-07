@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@doc-tools/transform": ">=2.7.1",
+    "@doc-tools/transform": ">=2.9.0",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-footnote": "^3.0.3",
     "markdown-it-ins": "^3.0.1",
@@ -39,6 +39,6 @@
     "yargs": "^17.4.0"
   },
   "peerDependencies": {
-    "@doc-tools/transform": ">=2.7.1"
+    "@doc-tools/transform": ">=2.9.0"
   }
 }
