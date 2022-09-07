@@ -1,6 +1,6 @@
 {
   "name": "@doc-tools/yfm2xliff",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/yandex-cloud/yfm2xliff#readme",
   "description": "text extraction from yfm syntax into xliff format",
   "bugs": {
@@ -22,12 +22,11 @@
     "lib/"
   ],
   "scripts": {
-    "build": "npm run build:clean && npm run build:cjs && npm run build:esm",
+    "build": "npm run build:clean && npm run prepare && npm run build:cjs && npm run build:esm",
     "build:clean": "rm -rf lib",
     "build:cjs": "node scripts/build.cjs.js",
     "build:esm": "node scripts/build.esm.js",
-    "preinstall": "cd md2xliff-fork && npm i && cd ..",
-    "postinstall": "node scripts/postinstall.mjs",
+    "prepare": "cd md2xliff-fork && npm i && cd .. && node scripts/postinstall.mjs",
     "test": "jest"
   },
   "bin": "cmd/index.js",
