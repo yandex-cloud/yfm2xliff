@@ -1,10 +1,31 @@
 {
-  "name": "yfm2xliff",
-  "main": "cmd/index.js",
-  "version": "1.0.0",
-  "homepage": "https://github.com/yandex-cloud/yfm2xliff",
-  "description": "yfm2xliff - extracts text to xliff, translates, and composes your yfm documentation",
+  "name": "@doc-tools/yfm2xliff",
+  "version": "0.0.0",
+  "homepage": "https://github.com/yandex-cloud/yfm2xliff#readme",
+  "description": "text extraction from yfm syntax into xliff format",
+  "bugs": {
+    "url": "https://github.com/yandex-cloud/yfm2xliff/issues",
+    "email": "moki-codes@yandex-team.ru"
+  },
+  "keywords": [
+    "yfm",
+    "md",
+    "xliff",
+    "markdown",
+    "text-segmentation",
+    "parser",
+    "generator"
+  ],
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
+    "build": "npm run build:clean && npm run build:cjs && npm run build:esm",
+    "build:clean": "rm -rf lib",
+    "build:cjs": "node scripts/build.cjs.js",
+    "build:esm": "node scripts/build.esm.js",
     "preinstall": "cd md2xliff-fork && npm i && cd ..",
     "postinstall": "node scripts/postinstall.mjs",
     "test": "jest"
@@ -17,6 +38,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "esbuild": "^0.15.7",
+    "esbuild-node-externals": "^1.5.0",
     "@doc-tools/transform": ">=2.9.0",
     "markdown-it-checkbox": "^1.1.0",
     "markdown-it-footnote": "^3.0.3",
