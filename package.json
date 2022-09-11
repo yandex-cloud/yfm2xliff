@@ -1,6 +1,6 @@
 {
   "name": "@doc-tools/yfm2xliff",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/yandex-cloud/yfm2xliff#readme",
   "description": "text extraction from yfm syntax into xliff format",
   "bugs": {
@@ -51,6 +51,10 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
+    "markdown-it-checkbox": "^1.1.0",
+    "markdown-it-footnote": "^3.0.3",
+    "markdown-it-ins": "^3.0.1",
+    "markdown-it-sub": "^1.0.0",
     "@doc-tools/sentenizer": "0.0.0",
     "@ramda/composep": "^0.26.1",
     "chalk": "^4.1.0",
