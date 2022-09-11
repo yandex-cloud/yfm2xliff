@@ -7,10 +7,8 @@ esbuild
         outfile: 'lib/esm/index.js',
         bundle: true,
         format: 'esm',
-        minify: true,
         platform: 'node',
-        sourcemap: true,
-        target: 'node14',
+        target: 'node12',
         plugins: [nodeExternalsPlugin()],
     })
     .catch(() => process.exit(1));
