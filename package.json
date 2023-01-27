@@ -51,21 +51,21 @@
     "prettier": "^2.6.2"
   },
   "dependencies": {
-    "markdown-it-checkbox": "^1.1.0",
-    "markdown-it-footnote": "^3.0.3",
-    "markdown-it-ins": "^3.0.1",
-    "markdown-it-sub": "^1.0.0",
     "@doc-tools/sentenizer": "0.0.0",
     "@ramda/composep": "^0.26.1",
     "chalk": "^4.1.0",
     "escape-html": "^1.0.3",
-    "highlight.js": "^11.5.0",
+    "highlight.js": "^11.7.0",
     "markdown-it-attrs": "^4.1.4",
+    "markdown-it-checkbox": "^1.1.0",
+    "markdown-it-footnote": "^3.0.3",
+    "markdown-it-ins": "^3.0.1",
+    "markdown-it-sub": "^1.0.0",
     "parse5": "^6.0.1",
     "ramda": "^0.28.0",
     "yargs": "^17.4.0"
   },
   "peerDependencies": {
-    "@doc-tools/transform": ">=2.9.0"
+    "@doc-tools/transform": "^2.14.2"
   }
 }
