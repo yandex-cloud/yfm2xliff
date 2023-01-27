@@ -66,6 +66,6 @@
     "yargs": "^17.4.0"
   },
   "peerDependencies": {
-    "@doc-tools/transform": ">=2.9.0"
+    "@doc-tools/transform": "^2.14.2"
   }
 }
