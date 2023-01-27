@@ -6,7 +6,9 @@ const strip = compose(
     // eslint-disable-next-line
     replace(/(?<![:-])([:-]\s)((?:\{\{).+(?=\n))/g, "$1'$2'"),
     // include, code, if, for directives
-    replace(/\{%\s(include|code|if|else|endif|for|endfor)\s[^{]*%\}/g, '\n'),
+    replace(/\{%\s(include|code|if|else|endif|for|endfor)\s[^{]*%\}/g, ''),
+    // eslint-disable-next-line security/detect-unsafe-regex
+    replace(/(?<!\s)[^\S\r\n]*\{%\s(include|code|if|else|endif|for|endfor)\s[^{]*%\}/g, '\n'),
     // inline LaTex directives
     replace(/\$[\S$]*\$(?!\d)/g, '\n'),
     // multiline LaTex directives
