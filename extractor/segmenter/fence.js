@@ -42,7 +42,7 @@ const markdown = compose(
 
 const isLangSet = compose(notEmpty, langLens);
 
-const commentsParserEmptyVal = () => ({_emitter: {rootNode: {children: []}}, language: ''});
+const commentsParserEmptyVal = () => ({emitter: {rootNode: {children: []}}, language: ''});
 
 const commentsParserErrLogger = tap((err) =>
     console.info('error occured parsing comments from fence block\n', err),
@@ -72,7 +72,7 @@ const parseComments = (token) => {
     const parse = commentsParser(token);
 
     const {
-        _emitter: {rootNode: children},
+        emitter: {rootNode: children},
     } = parse();
 
     return children;
