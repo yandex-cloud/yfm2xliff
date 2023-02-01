@@ -42,7 +42,12 @@ const markdown = compose(
 
 const isLangSet = compose(notEmpty, langLens);
 
-const commentsParserEmptyVal = () => ({emitter: {rootNode: {children: []}}, language: ''});
+// use one of the available inner interfaces of the hightlight.js
+const commentsParserEmptyVal = () => ({
+    _emitter: {rootNode: {children: []}},
+    emitter: {rootNode: {children: []}},
+    language: '',
+});
 
 const commentsParserErrLogger = tap((err) =>
     console.info('error occured parsing comments from fence block\n', err),
@@ -71,11 +76,12 @@ const liftComments = lift(isComment)(childrenLens)(comment);
 const parseComments = (token) => {
     const parse = commentsParser(token);
 
-    const {
-        emitter: {rootNode: children},
-    } = parse();
+    // use one of the available inner interfaces of the hightlight.js
+    const parsed = parse();
 
-    return children;
+    const children = [parsed?.emitter?.rootNode?.children, parsed?._emitter?.rootNode?.children];
+
+    return children[0] ?? children[1];
 };
 
 const other = compose(chain(stripPunct), chain(splitLines), liftComments, parseComments);
