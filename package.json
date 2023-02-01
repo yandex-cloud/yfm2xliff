@@ -1,6 +1,6 @@
 {
   "name": "@doc-tools/yfm2xliff",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "https://github.com/yandex-cloud/yfm2xliff#readme",
   "description": "text extraction from yfm syntax into xliff format",
   "bugs": {
