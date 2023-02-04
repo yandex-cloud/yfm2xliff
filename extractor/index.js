@@ -9,6 +9,7 @@ const {segmenter} = require('./segmenter');
 const {sentences} = require('./sentenizer');
 const {lexer} = require('./lexer');
 const generator = require('./generator');
+const {countCollisions} = require('./collisions');
 
 const argNames = ['md', 'mdPath', 'sklPath'];
 
@@ -37,6 +38,8 @@ const extract = async (args) => {
 
     const sentences_ = pipeline(md);
 
+    const collisions = countCollisions(normalize(md))(sentences_);
+
     const data = {
         markdownFileName: mdPath,
         skeletonFilename: sklPath,
@@ -48,6 +51,7 @@ const extract = async (args) => {
     return {
         skeleton: skeleton(md)(sentences_),
         xliff: xliffSerialize(data),
+        collisions,
         data: data,
     };
 };
